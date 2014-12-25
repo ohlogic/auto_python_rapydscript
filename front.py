@@ -14,8 +14,7 @@ print """
 <html lang="en">
 <head>
 <title></title>
-<!--  to put the css  in its  own  folder, preface   with   /css/   -->
-<link rel="stylesheet" type="text/css" href="page_frame.css" />
+<link rel="stylesheet" type="text/css" href="css/page_frame.css" />
 </head>
 <body>
 
