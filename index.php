@@ -9,48 +9,17 @@
 
 
 $source   = 'first.pyj';
-$compiled = 'first.js';
+//$compiled = 'first.js';	// optional, not used in this version
 
-if (! file_exists ($source)  ) {
+if ( ! file_exists ($source) ) {
 	echo "$source does not exist, exiting."; 
 	exit (1); 
 }
 
+compile( 'first' ); // or first.pyj
 
-if ( is_compiled ($source, $compiled) )
-	echo 'compiled, yes';
-else {
-	
-	if ( file_exists($compiled) )
-		unlink ( $compiled );	// delete so any previous versions aren't mistaken 
-	                            // as an up to date compiled version that could happen when there
-								// is a syntax error in the rapydscript source code
-	
-	$cc  = '"C:\Program Files\nodejs\node.exe" ';                                  // note trailing space
-	$cc .= '"C:\Program Files\nodejs\node_modules\rapydscript\bin\rapydscript" ';  // note trailing space
-	$cc .= "$source -o $compiled";
-	system($cc);                                                                   // compiling here
-	
-	if ( ! file_exists($compiled) ) {
-		echo "$source has a syntax error due to a failure to compile, exiting";
-		exit(1);
-	}
-	
-	echo 'just auto compiled python rapydscript to javascript';
-}
 
-	
-	
-	
-	// perhaps a final maintenance check that compiled js files exist
-	if ( ! file_exists($compiled) ) {
-		echo "$source does not exit, exiting";
-		exit(1);
-	}
-	
-	
-	echo system('python front.py');	// run web page here
-	
+echo system('python front.py');	// run web page here
 	
 	
 function mod_dt($file) {
@@ -59,21 +28,57 @@ function mod_dt($file) {
 
 function is_compiled($source, $compiled) {
 	
-	if (! file_exists ($source)  ) {
+	if ( ! file_exists ($source) ) {
 		echo "$source file does not exist, exiting";
 		return false;
 	}
 	
-	if (! file_exists ($compiled)  ) {
+	if ( ! file_exists ($compiled) ) {
 		echo "$compiled file does not exist" . '<br>';
 		return false;
 	}
 	
-	if (mod_dt($source) >= mod_dt($compiled) )
+	if ( mod_dt($source) >= mod_dt($compiled) )
 		return false;
 	else
 		return true;
 }
 
-// footnote: todo, can compile a list of *.pyj  or  each *.pyj in a directory
+
+function compile($source, $compiled = 'default_same_name_as_source') {
+
+	if ( ! contains('.pyj' , lower($source) ) )
+		$source = $source . '.pyj';
+
+	if ( $compiled == 'default_same_name_as_source' )
+		$compiled = without_file_extension($source) . '.js';
+	else if ( ! contains('.js' , lower($compiled) ) )
+		$compiled = $compiled . '.js';
+	
+	if ( is_compiled ($source, $compiled) ) {
+		echo 'compiled, yes, already done.';
+		return;
+	}
+	
+	if ( file_exists($compiled) )
+		unlink ( $compiled );
+
+	$cc  = '"C:\Program Files\nodejs\node.exe" ';                                  // note trailing space
+	$cc .= '"C:\Program Files\nodejs\node_modules\rapydscript\bin\rapydscript" ';  // note trailing space
+	$cc .= "$source -o $compiled";
+	system($cc);                                                                   // compiling here
+
+	if ( ! file_exists($compiled) ) {
+		echo "$source has a syntax error due to a failure to compile, exiting";
+		exit(1);
+	}
+
+	echo 'just auto compiled python rapydscript to javascript';
+}
+
+function contains ($needle, $haystack) { return strpos($haystack, $needle) !== false; }
+function lower($s) { return strtolower ($s); }
+function without_file_extension($s) { return substr($s, 0, strrpos($s, ".")); } // without . and file extension
+
+// footnote: todo, each *.pyj in a directory
 ?>
