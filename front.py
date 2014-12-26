@@ -1,4 +1,3 @@
-
 def top_content():
 	return 'header'
 	
@@ -15,6 +14,8 @@ print """
 <head>
 <title></title>
 <link rel="stylesheet" type="text/css" href="css/page_frame.css" />
+<script src="first.js"></script>
+
 </head>
 <body>
 

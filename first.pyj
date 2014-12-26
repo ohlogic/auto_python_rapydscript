@@ -1,0 +1,11 @@
+
+
+import stdlib
+
+a = 'I was here'
+b = 'and there'
+
+
+
+for i in range(10):
+	print(a, b)          # print ( a + b )  # or use plus operator for string concatenation (basic python)
