@@ -1,3 +1,5 @@
+# todo: create an automatic rapydscript compiled javascript def
+# and include the output javascript to the web page
 def top_content():
 	return 'header'
 	
