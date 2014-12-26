@@ -13,3 +13,7 @@ python.exe (to use a python script for server side web page creation,
 RapydScript note:
 *.pyj files are edited by the user.
 *.js  files are auto generated and should not be manually edited.
+
+Also note:
+The RapydScript simple example provided displays its output 
+through the browser's console log, Firebug's console log, etc.
