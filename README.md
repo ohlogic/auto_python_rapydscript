@@ -9,3 +9,7 @@ node.exe   (to compile rapydscript)
 python.exe (to use a python script for server side web page creation, 
 			optional perhaps but nice to have python server side 
 			and (python like) client side with rapydscript)
+
+RapydScript note:
+*.pyj files are edited by the user.
+*.js  files are auto generated and should not be manually edited.
