@@ -19,7 +19,7 @@ if ( ! file_exists ($source) ) {
 compile( 'first' ); // or first.pyj
 
 
-echo system('python front.py');	// run web page here
+echo system('python front.py 2>&1');	// run web page here, redirecting stderr to stdout useful to debug
 	
 	
 function mod_dt($file) {

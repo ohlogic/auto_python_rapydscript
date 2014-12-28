@@ -6,7 +6,10 @@ def mid_content():
 	
 def end_content():
 	return 'footer'
-	
+
+# Note, any JavaScript or any other code that contains a curly brace 
+# must double the curly brace when using the python format function with the triple double-quoted string, 
+# but not in a JavaScript src file (regardless of using the format function or not)
 print """
 
 <!DOCTYPE html>
