@@ -20,7 +20,7 @@ def end_content():
 
 def training_wheels_bit_slower_to_remove(s): # recommend: to remove this function for production code and edit code as required
                                              # just chose an arbitrary tag to represent the python format variables, works nicely, for now
-		return s.replace('{', '{{').replace('}', '}}').replace('{{**{{', '{').replace('}}**}}', '}')
+	return s.replace('{', '{{').replace('}', '}}').replace('{{**{{', '{').replace('}}**}}', '}')
 
 # test example, don't forget to have php.exe and php5ts.dll in PATH
 width = 100
@@ -63,15 +63,15 @@ jQuery.getScript("first.js", function() {
 
 <div id="container">
 
-<div id="top">{top_content}</div>
+<div id="top">{**{top_content}**}</div>
 
-<div id="mid">{mid_content}</div>
+<div id="mid">{**{mid_content}**}</div>
 
-<div id="end">{end_content}</div>
+<div id="end">{**{end_content}**}</div>
 
 </div>
 
-PHP test: {php_test}
+PHP test: {**{php_test}**}
 </body>
 </html>
 
