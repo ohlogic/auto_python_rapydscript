@@ -8,6 +8,30 @@
 // maintenance tasks, e.g., compiling rapydscript to js
 
 
+// Just revert to previous version, commit 
+// if not using a same domain name with different domain suffixes, e.g., domain.com, domain.net
+// Though the idea if needed is to eventually transfer data to the python code, if only a few arguments
+// simply through a list of parameter/arguments, with more, then to use json via a php array encode and send that
+
+echo domain_name_endswith() . '<br>'; // goes to py code
+
+function domain_name_endswith() {	  // or contains, domain_suffix, etc.    // or just argument to py code
+
+$ret1 = 'A';    // plan
+$ret2 = 'WIDE'; // B
+	if(isset($_SERVER['SERVER_NAME']) ) {
+		$s = $_SERVER['SERVER_NAME'];
+	//  :D  Lee
+		$s = right(raise($s), 2);
+		if ($s == 'US')
+			return $ret1;  // or boolean type
+		else
+			return $ret2;  // world, earth, whatever, the language thing issue...
+	}
+return $ret1;
+}
+
+
 $source   = 'first.pyj';
 //$compiled = 'first.js';	// optional, not used in this version
 
@@ -19,7 +43,7 @@ if ( ! file_exists ($source) ) {
 compile( 'first' ); // or first.pyj
 
 
-echo system('python front.py 2>&1');	// run web page here, redirecting stderr to stdout useful to debug
+echo system('python front.py '.domain_name_endswith().' 2>&1');	// run web page here, redirecting stderr to stdout useful to debug
 	
 	
 function mod_dt($file) {
@@ -78,7 +102,9 @@ function compile($source, $compiled = 'default_same_name_as_source') {
 
 function contains ($needle, $haystack) { return strpos($haystack, $needle) !== false; }
 function lower($s) { return strtolower ($s); }
+function raise($s) { return strtoupper ($s); }
 function without_file_extension($s) { return substr($s, 0, strrpos($s, ".")); } // without . and file extension
-
+function left($str, $length)  {return substr($str, 0, $length);}
+function right($str, $length) {return substr($str, -$length);  }
 // footnote: todo, each *.pyj in a directory
 ?>

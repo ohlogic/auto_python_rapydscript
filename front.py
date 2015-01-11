@@ -1,3 +1,4 @@
+import sys
 from subprocess import PIPE, Popen, STDOUT
                # experimental, just testing PHP called within Python
 def php(code): # shell execute PHP from Python (that is being called from php5_module in Apache), for fun...
@@ -17,7 +18,14 @@ def mid_content():
 	
 def end_content():
 	return 'footer'
-
+	
+# in the case not transferring data from php using multiple domains, simply revert to a previous version, commit 
+def domain_name(s):   
+	if(s == 'A'):
+		return 'us'
+	elif(s == 'WIDE'):
+		return 'com'
+		
 def training_wheels_bit_slower_to_remove(s): # recommend: to remove this function for production code and edit code as required
                                              # just chose an arbitrary tag to represent the python format variables, works nicely, for now
 	return s.replace('{', '{{').replace('}', '}}').replace('{{**{{', '{').replace('}}**}}', '}')
@@ -37,14 +45,16 @@ echo ('   """ + str(width) + """, """ + str(height) + """  ');
 # with the use of jQuery's .ready and .getScript that also verifies the JavaScript is syntactically correct.
 # If it is correct to the browser's JavaScript engine, the console.log will successfully print to the browser's console.
 
-print training_wheels_bit_slower_to_remove("""
+def output(name):
+
+	print training_wheels_bit_slower_to_remove("""
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title></title>
 <script src="js/jquery-1.11.2.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/page_frame.css" />
+<link rel="stylesheet" type="text/css" href="css/page_frame_{**{domain}**}.css" />
 <script src="first.js"></script>
 
 <script>
@@ -80,5 +90,16 @@ PHP test: {**{php_test}**}
 	top_content = top_content(),
 	mid_content = mid_content(),
 	end_content = end_content(),
-	php_test    = php(code)  # just testing, remove if coding anything serious
+	php_test    = php(code),  # just testing, remove if coding anything serious
+	
+	domain      = domain_name(name)  # or something like whether a mobile device,
+                                     # resolution information, etc. to select which css that fits	
 )
+
+if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit
+
+	if( not len(sys.argv) >= 2 ):
+		print "argument is required, which domain name from the initial, starting PHP"
+		sys.exit(1)
+		
+	output(sys.argv[1])
