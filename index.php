@@ -56,11 +56,17 @@ compile( 'first' ); // or first.pyj
    
    This happens in the simple preprocessor step, it also gives an optional switch to enable a bit simpler python coding,
    and then the statement after the double ampersand.
+   After running the actual Python web page, front.py, the statement after the next double ampersands changes the 
+   text replacement back in the simple postprocessor step to the Python open and close tags,    <%   and   %>  
 */
 // note: the double ampersand executes only if the first command is successful (the preprocessor step)
-echo system('python simple_preprocessor.py -TW front.py && python front.py '.domain_name_endswith().' 2>&1');	// run web page here, redirecting stderr to stdout useful to debug
-	
-	
+// NOTE: changed from system to passthru due to PHP5.6.4 strangely running python simple_postprocessor.py statement twice 2015.01.13
+// perhaps its the console @echo on,off situation when system is used (inconsequentially uncertain, i.e., not relevant at this point)
+echo passthru('python simple_preprocessor.py -TW front.py  2>&1  && '.
+              'python front.py '.domain_name_endswith().'  2>&1  && '.
+              'python simple_postprocessor.py -TW front.py 2>&1'); // run web page here, redirecting stderr to stdout useful to debug
+
+
 function mod_dt($file) {
 	return date ("YmdHis", filemtime($file));
 }

@@ -49,7 +49,7 @@ def output(name):
 # With this New Feature: Open and Close Tags for this Python file 
 # (It allows syntax highlighting within the tags, and eases coding)
 # Note that the following opening tag, (less-than sign and percent sign) will be replaced by the simple_preprocessor.py
-# with this:  print training_wheels_bit_slower_to_remove("""  NOTE: this exact comment line obviously does not run.
+# with this:  PRINT training_wheels_bit_slower_to_remove(""" (lowercase) NOTE: this exact comment line obviously does not run.
 	<%
 
 <!DOCTYPE html>
@@ -100,7 +100,7 @@ PHP test: {**{php_test}**}
 )
 
 # ALSO NOTE: On the line immediately starting with the (percent sign and greater-than sign), this is the closing tag
-# that gets replaced with this:  """)  Just to be clear: this exact comment line does not run, its just to explain this.
+# gets replaced back.
 
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit
 
