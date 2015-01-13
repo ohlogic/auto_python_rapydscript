@@ -46,8 +46,11 @@ echo ('   """ + str(width) + """, """ + str(height) + """  ');
 # If it is correct to the browser's JavaScript engine, the console.log will successfully print to the browser's console.
 
 def output(name):
-
-	print training_wheels_bit_slower_to_remove("""
+# With this New Feature: Open and Close Tags for this Python file 
+# (It allows syntax highlighting within the tags, and eases coding)
+# Note that the following opening tag, (less-than sign and percent sign) will be replaced by the simple_preprocessor.py
+# with this:  print training_wheels_bit_slower_to_remove("""  NOTE: this exact comment line obviously does not run.
+	<%
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +88,7 @@ PHP test: {**{php_test}**}
 </body>
 </html>
 
-""").format (  
+%>.format (  
 	# variables used
 	top_content = top_content(),
 	mid_content = mid_content(),
@@ -95,6 +98,9 @@ PHP test: {**{php_test}**}
 	domain      = domain_name(name)  # or something like whether a mobile device,
                                      # resolution information, etc. to select which css that fits	
 )
+
+# ALSO NOTE: On the line immediately starting with the (percent sign and greater-than sign), this is the closing tag
+# that gets replaced with this:  """)  Just to be clear: this exact comment line does not run, its just to explain this.
 
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit
 

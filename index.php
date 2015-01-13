@@ -42,8 +42,17 @@ if ( ! file_exists ($source) ) {
 
 compile( 'first' ); // or first.pyj
 
-
-echo system('python front.py '.domain_name_endswith().' 2>&1');	// run web page here, redirecting stderr to stdout useful to debug
+/* Note: New Feature   --   Open and Close Tags for ONLY the  .py  file  ( not the RapydScript code file )
+  
+   In this version I add the php feature to python of  open and close  tags that define 
+   the beginning of python code and when the end of the python code occurs that are the tags   <%   and   %>
+   exactly the way   <?php   and   ?>   work in PHP.
+   
+   This happens in the simple preprocessor step, it also gives an optional switch to enable a bit simpler python coding,
+   and then the statement after the double ampersand.
+*/
+# the double ampersand executes only if the first command is successful (the preprocessor step)
+echo system('python simple_preprocessor.py -TW front.py && python front.py '.domain_name_endswith().' 2>&1');	// run web page here, redirecting stderr to stdout useful to debug
 	
 	
 function mod_dt($file) {
