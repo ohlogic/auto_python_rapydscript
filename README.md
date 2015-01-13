@@ -22,3 +22,8 @@ Also note:
 
 The RapydScript simple example provided displays its output 
 through the browser's console log, Firebug's console log, etc.
+
+
+2015-01-13
+Added the feature of python tags, open and close <%  %> for triple quoted strings with a few format text replacements 
+to deal with curly brackets within triple quoted strings when used together with the format function.

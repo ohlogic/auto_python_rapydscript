@@ -100,7 +100,7 @@ PHP test: {**{php_test}**}
 )
 
 # ALSO NOTE: On the line immediately starting with the (percent sign and greater-than sign), this is the closing tag
-# gets replaced back.
+# gets replaced back to (triple double quotes and open parenthesis).
 
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit
 
