@@ -46,7 +46,13 @@ compile( 'first' ); // or first.pyj
   
    In this version I add the php feature to python of  open and close  tags that define 
    the beginning of python code and when the end of the python code occurs that are the tags   <%   and   %>
-   exactly the way   <?php   and   ?>   work in PHP.
+   very similar to the way   <?php   and   ?>   work in PHP.
+
+   ( The difference being the tags technically represent an echo (print) and a triple commented string,
+    (so the html output goes between the tags , not python keyword operations at this time) )
+
+   In PHP, html code written (without the echo function) goes outside of its open and close tags.
+   With this feature, it's different.
    
    This happens in the simple preprocessor step, it also gives an optional switch to enable a bit simpler python coding,
    and then the statement after the double ampersand.
