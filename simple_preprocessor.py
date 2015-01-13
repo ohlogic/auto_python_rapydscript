@@ -11,16 +11,16 @@ def read_it(file, TW=False):
 			fp.write( s.replace('<%', 'print """').replace('%>', '"""') )
 			
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit
-
+	# simply remove or comment out the print statements at your convenience, used just for debugging and testing purposes
 	if( not len(sys.argv) >= 2 ):
 		print "argument is required, which domain name from the initial, starting PHP"
 		sys.exit(1)
 	
 	if ( sys.argv[1] == '-TW' ):
-		print 'yes, got the TW switch argument'
+		print 'yes, received the TW switch argument'
 		
 		if ( len(sys.argv) >= 3 ):
-			print 'yes, got the file argument'
+			print 'yes, received the file argument'
 			read_it( file=sys.argv[2], TW=True )
 		else:
 			print 'python file is required'

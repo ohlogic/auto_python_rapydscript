@@ -51,7 +51,7 @@ compile( 'first' ); // or first.pyj
    This happens in the simple preprocessor step, it also gives an optional switch to enable a bit simpler python coding,
    and then the statement after the double ampersand.
 */
-# the double ampersand executes only if the first command is successful (the preprocessor step)
+// note: the double ampersand executes only if the first command is successful (the preprocessor step)
 echo system('python simple_preprocessor.py -TW front.py && python front.py '.domain_name_endswith().' 2>&1');	// run web page here, redirecting stderr to stdout useful to debug
 	
 	
