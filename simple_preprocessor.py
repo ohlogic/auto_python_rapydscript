@@ -6,9 +6,12 @@ def modify_it(file, TW=False):
 		fp.seek(0)
 		
 		if (TW):
-			fp.write( s.replace('<%', 'print training_wheels_bit_slower_to_remove("""').replace('%>', '""")') )
+			s = s.replace('return <%', 'return training_wheels_bit_slower_to_remove("""')
+			s = s.replace('<%', 'print training_wheels_bit_slower_to_remove("""').replace('%>', '""")')
+			fp.write( s )
 		else:
-			fp.write( s.replace('<%', 'print """').replace('%>', '"""') )
+			s = s.replace('return <%', 'return """')
+			fp.write(  s.replace('<%', 'print """' ).replace('%>', '"""') )
 		fp.truncate() # unnecessary, except when it is
 		
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit

@@ -27,3 +27,7 @@ through the browser's console log, Firebug's console log, etc.
 2015-01-13
 Added the feature of python tags, open and close <%  %> for triple quoted strings with a few format text replacements 
 to deal with curly brackets within triple quoted strings when used together with the format function.
+
+2015-01-15
+Added to the previous feature of open and close <%  %> tags for triple quoted strings so that it's able to be returned 
+as a string from a function or method.

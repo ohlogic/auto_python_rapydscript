@@ -14,7 +14,11 @@ def top_content():
 	return 'header'
 	
 def mid_content():
-	return 'middle'
+	return <%
+
+This is a test, <br>it is actually within a triple double quoted string
+
+%>
 	
 def end_content():
 	return 'footer'

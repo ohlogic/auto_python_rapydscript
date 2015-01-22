@@ -6,8 +6,11 @@ def modify_it(file, TW=False):
 		fp.seek(0)
 		
 		if (TW):
-			fp.write( s.replace('print training_wheels_bit_slower_to_remove("""', '<%').replace('""")', '%>') )
+			s = s.replace('return training_wheels_bit_slower_to_remove("""', 'return <%')
+			s = s.replace('print training_wheels_bit_slower_to_remove("""', '<%').replace('""")', '%>')
+			fp.write( s )
 		else:
+			s = s.replace('return """', 'return <%')
 			fp.write( s.replace('print """', '<%').replace('"""', '%>') )
 		fp.truncate()
 		
