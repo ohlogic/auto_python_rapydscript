@@ -39,7 +39,7 @@ return $ret1;
 $source   = 'first.pyj';
 //$compiled = 'first.js';	// optional, not used in this version
 
-if ( ! file_exists ($source) ) {
+if ( not( file_exists ($source) ) ) {
 	echo "$source does not exist, exiting."; 
 	exit (1); 
 }
@@ -103,12 +103,12 @@ function mod_dt($file) {
 
 function is_compiled($source, $compiled) {
 	
-	if ( ! file_exists ($source) ) {
+	if ( not( file_exists ($source) ) ) {
 		echo "$source file does not exist, exiting";
 		return false;
 	}
 	
-	if ( ! file_exists ($compiled) ) {
+	if ( not( file_exists ($compiled) ) ) {
 		echo "$compiled file does not exist" . '<br>';
 		return false;
 	}
@@ -122,12 +122,12 @@ function is_compiled($source, $compiled) {
 
 function compile($source, $compiled = 'default_same_name_as_source') {
 
-	if ( ! contains('.pyj' , lower($source) ) )
+	if ( not( contains('.pyj' , lower($source) ) ) )
 		$source = $source . '.pyj';
 
 	if ( $compiled == 'default_same_name_as_source' )
 		$compiled = without_file_extension($source) . '.js';
-	else if ( ! contains('.js' , lower($compiled) ) )
+	else if ( not( contains('.js' , lower($compiled) ) ) )
 		$compiled = $compiled . '.js';
 	
 	if ( is_compiled ($source, $compiled) ) {
@@ -143,7 +143,7 @@ function compile($source, $compiled = 'default_same_name_as_source') {
 	$cc .= "$source -o $compiled";
 	system($cc);                                                                   // compiling here
 
-	if ( ! file_exists($compiled) ) {
+	if ( not( file_exists($compiled) ) ) {
 		echo "$source has a syntax error due to a failure to compile, exiting";
 		exit(1);
 	}
