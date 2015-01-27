@@ -27,11 +27,11 @@ def top_content():
 	return 'header'
 	
 def mid_content():
-	return <%
+	return training_wheels_bit_slower_to_remove("""
 
 This is a test, <br>it is actually within a triple double quoted string
 
-%>
+""")
 	
 def end_content():
 	return 'footer'
@@ -67,7 +67,7 @@ def output(name):
 # (It allows syntax highlighting within the tags, and eases coding)
 # Note that the following opening tag, (less-than sign and percent sign) will be replaced by the simple_preprocessor.py
 # with this:  PRINT training_wheels_bit_slower_to_remove(""" (lowercase) NOTE: this exact comment line obviously does not run.
-	<%
+	print training_wheels_bit_slower_to_remove("""
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +105,7 @@ PHP test: {**{php_test}**}
 </body>
 </html>
 
-%>.format (  
+""").format (  
 	# variables used
 	top_content = top_content(),
 	mid_content = mid_content(),
