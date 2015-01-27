@@ -29,7 +29,7 @@ through the browser's console log, Firebug's console log, etc.
 Added to now allow including files in python using the quick tags feature.
 Quick tags are what I refer to as the open and close <%  %> tags and the optional feature of using custom tags
 for format variables within triple quoted strings that then allows to use one curly brace at a time without escaping it
-with a second curly brace.  Todo: Perhaps one file format for included python files also.
+with a second curly brace.
 
 2015-01-26
 Added a new feature to compile the python generated webpage only when edits to the source file.

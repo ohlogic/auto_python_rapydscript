@@ -1,18 +1,80 @@
 import os
-
-def compile_include_quick_tags_python(file):
-	compiled = file[:-3] + '_compiled.py'
-
-	os.system('"python.exe simple_preprocessor.py -TW '+file+' '+compiled+'  2>&1"')
-	
-	return compiled # run pre_processor on it, with file being the source and  it as the dest
-	
-include = "include.py"
-execfile(os.path.abspath(compile_include_quick_tags_python(include))) # require fullpath, includes file
-
-
 import sys
 from subprocess import PIPE, Popen, STDOUT
+
+same_file = False	# is True or False , gets value from PHP (global or make App class due to 
+														 # global variables frowned upon, i.e., not best practices)
+														 # began to import from PHP, still a todo, at this time
+PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
+					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
+
+def print_test(s):
+	global PRINTOUT
+	if (PRINTOUT):
+		print s
+
+def compile_include_quick_tags(file):
+	global same_file
+	
+	if(not same_file):
+		compiled = file[:-3] + '_compiled.py'
+	else:
+		compiled = file
+		
+	os.system('"python.exe simple_preprocessor.py -TW '+file+' '+compiled+'  2>&1"')
+	
+	print_test( 'INCLUDING THIS FILE(' + compiled + ')' )
+	return compiled # run pre_processor on it, with file being the source and  it as the dest
+		
+	# any includes done here to evaluate one file format variable, Q. can I include in a def,function
+	
+	
+def include_quick_tags_file(source):
+	global same_file
+	
+	print_test( 'POINT #1 file is:('+ source + ')' )
+	f = os.path.abspath(compile_include_quick_tags(source)) # compiled variable
+	print_test( '<br>file to include('+f+')' )
+	
+		# initially the idea was to compile here with the following statement:
+		#execfile(compiled) # require fullpath, includes file   (though having a scope issue here)
+				
+	#if (same_file):
+		# need to postprocessor.py the file after compiling
+		# due to the way execfile currently works, cannot call from a def,function as I intend it to work (simply include)
+	
+	return f # hmm, how in -antastic is this, workaround needed by the receiver of this return when same file format is true
+
+
+def execfile_fix(file): # workaround, due to execfile not working (as i'd like it to work (as expected)) from within a def,function
+	global same_file
+	
+	if(same_file):
+		os.system('"python.exe simple_postprocessor.py -TW '+file+' 2>&1"');
+
+		
+file_to_include = 'include.py'
+# including this way due to execfile does not including a file within a def,function as I expected
+#execfile(include_quick_tags_file(file_to_include))	# this functin used to include each python file with quick tags		 
+
+
+# NOTE: include section of source code with two entries due to workaround needed for execfile def,function
+execfile(include_quick_tags_file(file_to_include))
+execfile_fix(file_to_include) # when same file format is used, post_procesor.py (not used when using different file format)
+							  # NOTE: fix does not need to be removed if using different file format (due to boolean check)
+							  # otherwise, workaround is to convert after output() def called from main, with list of include files to convert back
+
+							  					  
+def print_args(s, intro=''):
+	print_test( intro )
+	for item in s:
+		print_test( 'ARG:(' + item + ')' )
+		
+
+def create_superglobals(args):
+	global same_file
+	# idea to transfer superglobals from PHP here
+	
                # experimental, just testing PHP called within Python
 def php(code): # shell execute PHP from Python (that is being called from php5_module in Apache), for fun...
 	p = Popen(['php'], stdout=PIPE, stdin=PIPE, stderr=STDOUT) # open process
@@ -28,7 +90,7 @@ def top_content():
 	
 def mid_content():
 	return <%
-
+	
 This is a test, <br>it is actually within a triple double quoted string
 
 %>
@@ -90,7 +152,7 @@ jQuery.getScript("first.js", function() {
 
 </head>
 <body>
-{**{testing_output}**}<br>
+<br>{**{testing_output}**}<br>
 <div id="container">
 
 <div id="top">{**{top_content}**}</div>
@@ -124,9 +186,12 @@ testing_output = this_is_a_test()    # test of include file using quick tags pyt
 # gets replaced back to (triple double quotes and open parenthesis).
 
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit
-
-	if( not len(sys.argv) >= 2 ):
+	create_superglobals(sys.argv)
+	print_args(sys.argv, '<br>HERE front.py '+'<br>')
+	
+	if( not len(sys.argv) >= 3 ):
 		print "argument is required, which domain name from the initial, starting PHP"
+		print "argument required, same file format bool"
 		sys.exit(1)
 		
 	output(sys.argv[1])

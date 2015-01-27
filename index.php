@@ -76,7 +76,7 @@ compile( 'first' ); // or first.pyj
 if ($one_file_format) {
 
 echo passthru('python simple_preprocessor.py -TW front.py  2>&1  && '.
-              'python front.py '.domain_name_endswith().'  2>&1  && '.
+              'python front.py '.domain_name_endswith().' "'.str_bool($one_file_format).'"  2>&1  && '.
               'python simple_postprocessor.py -TW front.py 2>&1'); // run web page here, redirecting stderr to stdout useful to debug
 
 }
@@ -89,11 +89,11 @@ else {
 		echo '(PYTHON COMPILING)';
 		echo passthru('python simple_preprocessor.py -TW "'.$source.'" "'.$compiled.'"  2>&1  && '.
 		
-					  'python "'.$compiled .'" ' .domain_name_endswith().'  2>&1  ');
+					  'python "'.$compiled .'" ' .domain_name_endswith().' "'.str_bool($one_file_format).'"  2>&1  ');
 	}
 	else {
 		echo '(ALREADY COMPILED)';
-		echo passthru('python "'.$compiled. '" ' .domain_name_endswith().'  2>&1 ');
+		echo passthru('python "'.$compiled. '" ' .domain_name_endswith().' "'.str_bool($one_file_format).'"  2>&1 ');
 	}
 }
 
@@ -151,6 +151,7 @@ function compile($source, $compiled = 'default_same_name_as_source') {
 	echo 'just auto compiled python rapydscript to javascript';
 }
 
+function str_bool($s){ return ( ($s) ? 'True' : 'False'); };
 function not($s){return !$s;}
 function contains ($needle, $haystack) { return strpos($haystack, $needle) !== false; }
 function lower($s) { return strtolower ($s); }
@@ -158,5 +159,7 @@ function raise($s) { return strtoupper ($s); }
 function without_file_extension($s) { return substr($s, 0, strrpos($s, ".")); } // without . and file extension
 function left($str, $length)  {return substr($str, 0, $length);}
 function right($str, $length) {return substr($str, -$length);  }
+#function str($s){	   // should just return 'true' or 'false' and name it str_bool() but perhaps str() can be extended
+#	if (is_bool($s) == true) return ( ($s) ? 'true' : 'false'); else return 'Different type'; }
 // footnote: todo, each *.pyj in a directory
 ?>
