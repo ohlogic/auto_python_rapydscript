@@ -31,3 +31,6 @@ to deal with curly brackets within triple quoted strings when used together with
 2015-01-15
 Added to the previous feature of open and close <%  %> tags for triple quoted strings so that it's able to be returned 
 as a string from a function or method.
+
+2015-01-26
+Added a new feature to compile the python generated webpage only when edits to the source file.

@@ -1,5 +1,9 @@
 <?php
 
+$one_file_format        = False;	// when True like before, a single source file is used (compiles each time program runs)
+									// when False, then uses a new feature, to compile only when edit,modified source
+									// Note: when False, the file front_compiled.py is created
+
 // Now, auto compiling a RapydScript to JavaScript if needed before running the web page
 
 // Note:
@@ -62,10 +66,36 @@ compile( 'first' ); // or first.pyj
 // note: the double ampersand executes only if the first command is successful (the preprocessor step)
 // NOTE: changed from system to passthru due to PHP5.6.4 strangely running python simple_postprocessor.py statement twice 2015.01.13
 // perhaps its the console @echo on,off situation when system is used (inconsequentially uncertain, i.e., not relevant at this point)
+
+// Update: Added a feature to compile the source code only when a edit occurs, therefore the compiled file runs to display the webpage
+//         this is done by adding a one file format check, compiling only when the source code is modified, otherwise it simply outputs 
+//         the compiled file (slight update to simple_preprocessor.py also)
+//         With this feature there is an added benefit that there is no need for a post_processor.py due 
+//         to being different files and the source is not modified         this feature added: 2015.01.26 and the entire project up to this day by Stan "Lee" Switaj and my email is: BehemothIncCEO@gmail.com
+//         ( Sidenote: Though if this code were adapted to create a   mod_quick_tags_python  Apache module, perhaps the simple_postprocessor.py would still be required)          (comments,suggestions welcome)
+if ($one_file_format) {
+
 echo passthru('python simple_preprocessor.py -TW front.py  2>&1  && '.
               'python front.py '.domain_name_endswith().'  2>&1  && '.
               'python simple_postprocessor.py -TW front.py 2>&1'); // run web page here, redirecting stderr to stdout useful to debug
 
+}
+else {
+	
+	$source = 'front.py';
+	$compiled = 'front_compiled.py';
+	
+	if ( not( is_compiled($source, $compiled) ) ) {
+		echo '(PYTHON COMPILING)';
+		echo passthru('python simple_preprocessor.py -TW "'.$source.'" "'.$compiled.'"  2>&1  && '.
+		
+					  'python "'.$compiled .'" ' .domain_name_endswith().'  2>&1  ');
+	}
+	else {
+		echo '(ALREADY COMPILED)';
+		echo passthru('python "'.$compiled. '" ' .domain_name_endswith().'  2>&1 ');
+	}
+}
 
 function mod_dt($file) {
 	return date ("YmdHis", filemtime($file));
@@ -121,6 +151,7 @@ function compile($source, $compiled = 'default_same_name_as_source') {
 	echo 'just auto compiled python rapydscript to javascript';
 }
 
+function not($s){return !$s;}
 function contains ($needle, $haystack) { return strpos($haystack, $needle) !== false; }
 function lower($s) { return strtolower ($s); }
 function raise($s) { return strtoupper ($s); }
