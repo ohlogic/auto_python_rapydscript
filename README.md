@@ -25,6 +25,10 @@ Also note:
 The RapydScript simple example provided displays its output 
 through the browser's console log, Firebug's console log, etc.
 
+2015-01-28
+Added a feature to allow writing print statements to the browser's console for demonstration purposes,
+to show a working example of python string compatibility with that of PHP and JavaScript strings.
+
 2015-01-27
 Added to now allow including files in python using the quick tags feature.
 Quick tags are what I refer to as the open and close <%  %> tags and the optional feature of using custom tags

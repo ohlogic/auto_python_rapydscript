@@ -2,12 +2,17 @@ import os
 import sys
 from subprocess import PIPE, Popen, STDOUT
 
-same_file = False	# is True or False , gets value from PHP (global or make App class due to 
+same_file = True	# is True or False , gets value from PHP (global or make App class due to 
 														 # global variables frowned upon, i.e., not best practices)
 														 # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
 					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
+					# this todo: done 2015.01.28
 
+def to_write(file, s):
+	with open(file, 'w') as fp:
+		fp.write(s)					
+					
 def print_test(s):
 	global PRINTOUT
 	if (PRINTOUT):
@@ -52,7 +57,9 @@ def execfile_fix(file): # workaround, due to execfile not working (as i'd like i
 	if(same_file):
 		os.system('"python.exe simple_postprocessor.py -TW '+file+' 2>&1"');
 
-		
+
+# INCLUDES TO BE PLACED HERE
+
 file_to_include = 'include.py'
 # including this way due to execfile does not including a file within a def,function as I expected
 #execfile(include_quick_tags_file(file_to_include))	# this functin used to include each python file with quick tags		 
@@ -180,6 +187,37 @@ PHP test: {**{php_test}**}
 testing_output = this_is_a_test()    # test of include file using quick tags python syntax
 )
 
+	# testing writing print statement to the web browser 
+	# the intent is to create a python function to wrap the writing with print statements to the web browser's console
+	code_init = """
+$name = 'Stan';
+ 
+$fruits = array("banana", "apple", "strawberry", "pineaple");
+ 
+$user = new stdClass;
+$user->name = "Switaj";
+$user->desig = "CEO";
+$user->lang = "PHP Running Through subprocess (Python)";
+$user->purpose = "To print log messages to the browser console messages to the browser";
+ var_dump($fruits);
+logConsole('$name var', $name, true);
+logConsole('An array of fruits', $fruits, true);
+logConsole('$user object', $user, true);
+"""
+
+
+	# written to print to the console log of a web browser
+	# had to use decode string escape before being able to replace problematic characters as listed
+	# assigned arbitrary variables to replace in the function that returns a string also demonstrating
+	# the feature of including an external python file that uses quick tags, (both open and close tags), and a format string variable syntax of {**{variable_name}**}
+	s = (code_init + "\n" + console_log_function())
+	s = s.replace('{{', '{').replace('}}', '}').replace("#'#", '"').decode('string_escape').replace('HERE', '\\s\\r\\n\\t\\0\\x0B' )
+	s = s.replace('a1', "#'#").replace('a2', '#""#').replace('a3', "#''#").replace('a4', "#\\n#").replace('a5', "#\\r\\n#")
+	s = s.replace('b4', "\\\\n").replace('b5', "\\\\n").replace('c1', "\\\\n")
+	
+	to_write('testit.txt', s) # uses to determine problematic characters only, can be removed
+	
+	print php(  s   )
 
 
 # ALSO NOTE: On the line immediately starting with the (percent sign and greater-than sign), this is the closing tag
