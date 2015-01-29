@@ -1,14 +1,17 @@
 import os
 import sys
 from subprocess import PIPE, Popen, STDOUT
+import time
 
-same_file = True	# is True or False , gets value from PHP (global or make App class due to 
+same_file = False	# is True or False , gets value from PHP (global or make App class due to 
 														 # global variables frowned upon, i.e., not best practices)
 														 # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
 					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
 					# this todo: done 2015.01.28
-
+def mod_dt(file):
+	return time.strftime("%Y%m%d%H%M%S",time.localtime(os.path.getmtime(file)));
+	
 def to_write(file, s):
 	with open(file, 'w') as fp:
 		fp.write(s)					
@@ -17,7 +20,23 @@ def print_test(s):
 	global PRINTOUT
 	if (PRINTOUT):
 		print s
+		
+def exists(path):
+	return True if ( os.path.isfile(path) or os.path.isdir(path)) else False
 
+def file_exists(path):
+	return os.path.isfile(path)
+	
+def is_compiled(source, dest):
+
+	if not file_exists(dest): # exists def nice, file_exists works fine too
+		return False
+
+	if ( mod_dt(source) >= mod_dt(dest) ):
+		return False
+	else:
+		return True
+		
 def compile_include_quick_tags(file):
 	global same_file
 	
@@ -25,7 +44,13 @@ def compile_include_quick_tags(file):
 		compiled = file[:-3] + '_compiled.py'
 	else:
 		compiled = file
-		
+	
+	if ( is_compiled(file, compiled) ): # working on
+		print '(INCLUDE ALREADY COMPILED)'
+		return compiled                                   #
+	
+	print '(INCLUDE NOT compiled yet, therefore COMPILING)'
+	
 	os.system('"python.exe simple_preprocessor.py -TW '+file+' '+compiled+'  2>&1"')
 	
 	print_test( 'INCLUDING THIS FILE(' + compiled + ')' )
@@ -58,6 +83,7 @@ def execfile_fix(file): # workaround, due to execfile not working (as i'd like i
 		os.system('"python.exe simple_postprocessor.py -TW '+file+' 2>&1"');
 
 
+		
 # INCLUDES TO BE PLACED HERE
 
 file_to_include = 'include.py'
