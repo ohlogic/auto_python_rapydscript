@@ -29,7 +29,7 @@ def console_log_function():
  
           if ($jsEval && (is_array($data) || is_object($data)))
           {
-               $data = 'eval(' . preg_replace( '{**{regex}**}', '', json_encode($data)) . ')';
+               $data = 'eval(' . preg_replace( '#[\\a\\1\\2\\3\\4\\5\\6\\7\\8\\9\\b\\f\\v\\r\\n\\t\\0\\x0B]+#', '', json_encode($data)) . ')';
                $isevaled = true;
           }
           else
@@ -39,8 +39,8 @@ def console_log_function():
  
           # sanitalize
 		  $data = $data ? $data : '';
-          $search_array = array("a1", 'a2', "a3", "a4", "a5");
-          $replace_array = array('"', '', '', 'b4', 'b5');
+          $search_array = array("#\\'#", '#\\"\\"#', "#\\'\\'#", "#\\n#", "#\\r\\n#");
+          $replace_array = array('"', '', '', '\\\\n', '\\\\n');
           $data = preg_replace($search_array,  $replace_array, $data);
           $data = ltrim(rtrim($data, '"'), '"');
           $data = $isevaled ? $data : ($data[0] === "'") ? $data : "'" . $data . "'";
@@ -56,7 +56,7 @@ $js = <<<JSCODE
      console.log('------------------------------------------');
      console.log('$type');
      console.log($data);
-     console.log('c1');
+     console.log('\\\\n');
 </script>
 JSCODE;
  
@@ -64,6 +64,8 @@ JSCODE;
      } # end logConsole
 	 
 	 
-echo( '{**{hello}**}');	 
-	 
-%>.format (  regex = '#[HERE]+#'  ,  hello='hello world' )
+echo( ' <br> {**{hello}**} <br>');	 
+
+echo( '{**{howdy}**}');
+
+%>.format (  hello='hello world', howdy='very well thanks' )

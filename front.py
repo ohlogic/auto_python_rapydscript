@@ -2,13 +2,14 @@ import os
 import sys
 from subprocess import PIPE, Popen, STDOUT
 import time
+import ast
 
 same_file = False	# is True or False , gets value from PHP (global or make App class due to 
 														 # global variables frowned upon, i.e., not best practices)
 														 # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
 					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
-					# this todo: done 2015.01.28
+					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29
 def mod_dt(file):
 	return time.strftime("%Y%m%d%H%M%S",time.localtime(os.path.getmtime(file)));
 	
@@ -157,6 +158,7 @@ echo ('   """ + str(width) + """, """ + str(height) + """  ');
 # with the use of jQuery's .ready and .getScript that also verifies the JavaScript is syntactically correct.
 # If it is correct to the browser's JavaScript engine, the console.log will successfully print to the browser's console.
 
+
 def output(name):
 # With this New Feature: Open and Close Tags for this Python file 
 # (It allows syntax highlighting within the tags, and eases coding)
@@ -196,6 +198,12 @@ jQuery.getScript("first.js", function() {
 
 </div>
 
+NOTE: Just Testing OUTPUT HERE (note: the following escape characters need double backslash (octals not tested at this time)<br>
+\\\r\\n\\t\\0\\x0B  testing1, expected
+<br>
+\\a\\1\\2\\3\\4\\5\\6\\7\\8\\9\\b\\f\\v\\r\\n\\t\\0\\x0B   testing2, expected
+Result: Easy dealing with escape characters here. Though a python def, function like PHP's htmlentities still perhaps required (to be written,created)
+<br>
 PHP test: {**{php_test}**}
 </body>
 </html>
@@ -216,12 +224,12 @@ testing_output = this_is_a_test()    # test of include file using quick tags pyt
 	# testing writing print statement to the web browser 
 	# the intent is to create a python function to wrap the writing with print statements to the web browser's console
 	code_init = """
-$name = 'Stan';
+$name = 'Stan Switaj';
  
 $fruits = array("banana", "apple", "strawberry", "pineaple");
  
 $user = new stdClass;
-$user->name = "Switaj";
+$user->name = 'Hello 123.00 \\a\\1\\2\\3\\4\\5\\6\\7\\8\\9\\b\\f\\v\\r\\n\\t\\0\\x0B ';
 $user->desig = "CEO";
 $user->lang = "PHP Running Through subprocess (Python)";
 $user->purpose = "To print log messages to the browser console messages to the browser";
@@ -232,22 +240,39 @@ logConsole('$user object', $user, true);
 """
 
 
-	# written to print to the console log of a web browser
+	# Written to print to the console log of a web browser
 	# had to use decode string escape before being able to replace problematic characters as listed
 	# assigned arbitrary variables to replace in the function that returns a string also demonstrating
 	# the feature of including an external python file that uses quick tags, (both open and close tags), and a format string variable syntax of {**{variable_name}**}
-	s = (code_init + "\n" + console_log_function())
-	s = s.replace('{{', '{').replace('}}', '}').replace("#'#", '"').decode('string_escape').replace('HERE', '\\s\\r\\n\\t\\0\\x0B' )
-	s = s.replace('a1', "#'#").replace('a2', '#""#').replace('a3', "#''#").replace('a4', "#\\n#").replace('a5', "#\\r\\n#")
-	s = s.replace('b4', "\\\\n").replace('b5', "\\\\n").replace('c1', "\\\\n")
 	
-	to_write('testit.txt', s) # uses to determine problematic characters only, can be removed
+	s = (code_init + "\n" + console_log_function()  )
 	
+	# Escaping quotes seem to be the only small hassle from converting php source code to php source code within a python triple quoted string 
+	# (due to the slightly obtuse (yet it works) situation of... running PHP then system calling Python and within it, running PHP within a python triple quoted string)
+	# therefore, NOTE: the extra backslash compared with the php version
+	# this will convert it to the exact php, but I've no need of it at this time, though note the following variable name in the comments (the immediate next line)
+	# string_to_write__NOT_DISPLAY_for_exact_PHP_equivalent_source_code = s.replace("#\\'#", "#'#").replace('#\\"\\"#', '#""#').replace("#\\'\\'#", "#''#")   # works, tested
+	# The previous statement string (in the comments) can be used to write if desired to get the exact PHP equivalent that is different than the string used to output to the web page 
+	# (due to an extra backslash required by python for quotes)
+
+	
+	# For convenience I've included it in the following write statement anyway (to get the exact equivalent to the PHP source code string)
+	# The next line is optional to the OUTPUT to Web (i.e., it will not affect the display OUTPUT to web 
+	# (only for the previously stated purpose. So it's just to inspect and review the string by writing it to a file)
+	s = s.replace("#\\'#", "#'#").replace('#\\"\\"#', '#""#').replace("#\\'\\'#", "#''#") # comment this line out to view the exact string that gets OUTPUT to the web
+	
+	to_write('testit.txt', s ) # uses to determine problematic characters only, can be removed
+	
+	# Sidenote: I did update the original regex and removed the \s to allow spaces and its noteworthy that it only needs one backslash to escape the string
+	# as well as extended the regex just for demonstration to cover the escape characters commonly used
+	# this is how the original regex should be escaped:     '#[\s\\r\\n\\t\\0\\x0B]+#'       and works (note remove the \s to allow spaces) 
+
+	# TO OUTPUT to web
 	print php(  s   )
 
 
-# ALSO NOTE: On the line immediately starting with the (percent sign and greater-than sign), this is the closing tag
-# gets replaced back to (triple double quotes and open parenthesis).
+	# ALSO NOTE: On the line immediately starting with the (percent sign and greater-than sign), this is the closing tag
+	# gets replaced back to (triple double quotes and open parenthesis, in the situation when the same_format is set to true)
 
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit
 	create_superglobals(sys.argv)

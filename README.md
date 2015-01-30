@@ -26,7 +26,11 @@ The RapydScript simple example provided displays its output
 through the browser's console log, Firebug's console log, etc.
 
 2015-01-29
-Added the feature to compile the include python files only when its been edited, modified (similar to the feature added on 2015-01-26 that compiles the python generated webpage only when edits to the source file happen).
+Added the feature to compile the include python files only when its been edited, modified (similar to the feature added on 2015-01-26 
+that compiles the python generated webpage only when edits to the source file happen).
+In a second update to source code, I've refactored the code to better deal with strings 
+from PHP to Python by escaping in the include files as an improvement and added plenty of comments 
+to make apparent how the internals work to date.
 
 2015-01-28
 Added a feature to allow writing print statements to the browser's console for demonstration purposes,
