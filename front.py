@@ -5,8 +5,8 @@ import time
 import ast
 
 same_file = False	# is True or False , gets value from PHP (global or make App class due to 
-														 # global variables frowned upon, i.e., not best practices)
-														 # began to import from PHP, still a todo, at this time
+                    # global variables frowned upon, i.e., not best practices)
+                    # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
 					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
 					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29
@@ -30,7 +30,7 @@ def file_exists(path):
 	
 def is_compiled(source, dest):
 
-	if not file_exists(dest): # exists def nice, file_exists works fine too
+	if ( not file_exists(dest) ): # exists def nice, file_exists works fine too
 		return False
 
 	if ( mod_dt(source) >= mod_dt(dest) ):
@@ -46,9 +46,9 @@ def compile_include_quick_tags(file):
 	else:
 		compiled = file
 	
-	if ( is_compiled(file, compiled) ): # working on
+	if ( is_compiled(file, compiled) ):
 		print '(INCLUDE ALREADY COMPILED)'
-		return compiled                                   #
+		return compiled
 	
 	print '(INCLUDE NOT compiled yet, therefore COMPILING)'
 	
@@ -95,8 +95,8 @@ file_to_include = 'include.py'
 # NOTE: include section of source code with two entries due to workaround needed for execfile def,function
 execfile(include_quick_tags_file(file_to_include))
 execfile_fix(file_to_include) # when same file format is used, post_procesor.py (not used when using different file format)
-							  # NOTE: fix does not need to be removed if using different file format (due to boolean check)
-							  # otherwise, workaround is to convert after output() def called from main, with list of include files to convert back
+                              # NOTE: fix does not need to be removed if using different file format (due to boolean check)
+                              # otherwise, workaround is to convert after output() def called from main, with list of include files to convert back
 
 							  					  
 def print_args(s, intro=''):
@@ -241,9 +241,8 @@ logConsole('$user object', $user, true);
 
 
 	# Written to print to the console log of a web browser
-	# had to use decode string escape before being able to replace problematic characters as listed
-	# assigned arbitrary variables to replace in the function that returns a string also demonstrating
-	# the feature of including an external python file that uses quick tags, (both open and close tags), and a format string variable syntax of {**{variable_name}**}
+
+	# Including an external python file that uses quick tags, (both open and close tags), and a format string variable syntax of {**{variable_name}**}
 	
 	s = (code_init + "\n" + console_log_function()  )
 	
