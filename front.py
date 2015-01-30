@@ -4,12 +4,15 @@ from subprocess import PIPE, Popen, STDOUT
 import time
 import ast
 
-same_file = False	# is True or False , gets value from PHP (global or make App class due to 
+same_file = True	# is True or False , gets value from PHP (global or make App class due to 
                     # global variables frowned upon, i.e., not best practices)
                     # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
 					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
-					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29			
+					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29
+					# 2015.01.30 added feature to allow python quick tags to triple quoted strings
+					# triple quoted string can still be used, but not between <% and %> because they represent triple double quotes, and that would be
+					# triple double quotes within triple double quotes (quotes within TDQ need to be escaped with the backslash)
 def mod_dt(file):
 	return time.strftime("%Y%m%d%H%M%S",time.localtime(os.path.getmtime(file)));
 	
@@ -106,10 +109,10 @@ def print_wwwlog(s, esc_sequences_already=False): # prints to brower's console l
 		s = s.encode('hex')
 		s = '<hex>'+s+'</hex>'
 		
-	code_init = """
+	code_init = <%
 $name1 = '%s';
 logConsole('$name1 var', $name1, true);
-""" % s
+%> % s
 	wwwout = code_init + "\n" + console_log_function()
 	print php(  wwwout  ) # to web
 					  					  
@@ -167,9 +170,9 @@ def training_wheels_bit_slower_to_remove(s): # recommend: to remove this functio
 # test example, don't forget to have php.exe and php5ts.dll in PATH
 width = 100
 height = 100	
-code = """
+code = <%
 echo ('   """ + str(width) + """, """ + str(height) + """  ');
-"""
+%>
 
 # Note, any JavaScript or any other code that contains a curly brace 
 # must double the curly brace when using the python format function with the triple double-quoted string, 
@@ -244,7 +247,7 @@ testing_output = this_is_a_test()    # test of include file using quick tags pyt
 
 	# testing writing print statement to the web browser 
 	# the intent is to create a python function to wrap the writing with print statements to the web browser's console
-	code_init = """
+	code_init = <%
 $name = 'Stan Switaj';
  
 $fruits = array("banana", "apple", "strawberry", "pineaple");
@@ -258,7 +261,7 @@ $user->purpose = "To print log messages to the browser console messages to the b
 logConsole('$name var', $name, true);
 logConsole('An array of fruits', $fruits, true);
 logConsole('$user object', $user, true);
-"""
+%>
 
 
 	# Written to print to the console log of a web browser

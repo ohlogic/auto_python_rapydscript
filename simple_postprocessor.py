@@ -1,17 +1,25 @@
 import sys
 
+def algorithm(s, tw):
+	if (tw):
+		s = s.replace('return training_wheels_bit_slower_to_remove("""', 'return <%')
+		s = s.replace('= training_wheels_bit_slower_to_remove("""', '= <%')			
+		s = s.replace('print training_wheels_bit_slower_to_remove("""', '<%').replace('""")', '%>')	
+	else:
+		s = s.replace('return """', 'return <%')
+		s = s.replace('= """', '= <%') 			
+		s = s.replace('print """', '<%').replace('"""', '%>')	
+	return s
+	
 def modify_it(file, TW=False):
 	with open(file, "r+") as fp:
 		s = fp.read()
 		fp.seek(0)
 		
 		if (TW):
-			s = s.replace('return training_wheels_bit_slower_to_remove("""', 'return <%')
-			s = s.replace('print training_wheels_bit_slower_to_remove("""', '<%').replace('""")', '%>')
-			fp.write( s )
+			fp.write( algorithm(s,TW) )
 		else:
-			s = s.replace('return """', 'return <%')
-			fp.write( s.replace('print """', '<%').replace('"""', '%>') )
+			fp.write( algorithm(s,TW) )
 		fp.truncate()
 		
 if __name__ == "__main__":  # in the case not transferring data from php, then simply revert to a previous version, commit

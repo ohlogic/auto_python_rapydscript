@@ -4,6 +4,8 @@ def this_is_a_test():
 	return <%
 
 This is intented to be included as text, and returned as a string
+\\a\\1\\2\\3\\4\\5\\6\\7\\8\\9\\b\\f\\v\\r\\n\\t\\0\\x0B   testing3, expected
+<!-- escape characters within include files -->
 
 %>
 		

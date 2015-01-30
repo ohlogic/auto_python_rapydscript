@@ -34,7 +34,8 @@ through the browser's console log, Firebug's console log, etc.
 Added a very innovative feature of hexadecimal open and close tags of <hex> and </hex> to reliably transport content 
 of hexadecimal type converted from a string to the web browser, from there it is converted back to a string. 
 For the initial purpose to deal with tedious python escape characters.
-
+In another update to source code, added the feature to have quick tags for python triple quoted strings 
+for the assignment operator (to a variable).
 2015-01-29
 Added the feature to compile the include python files only when its been edited, modified (similar to the feature added on 2015-01-26 
 that compiles the python generated webpage only when edits to the source file happen).

@@ -7,9 +7,12 @@ def print_args(s):
 def algorithm(s, tw):
 	if (tw):
 		s = s.replace('return <%', 'return training_wheels_bit_slower_to_remove("""')
+		s = s.replace('= <%', '= training_wheels_bit_slower_to_remove("""')		
 		s = s.replace('<%', 'print training_wheels_bit_slower_to_remove("""').replace('%>', '""")')
+
 	else:
 		s = s.replace('return <%', 'return """')
+		s = s.replace('= <%', '= """')		
 		s = s.replace('<%', 'print """' ).replace('%>', '"""')
 	return s
 
