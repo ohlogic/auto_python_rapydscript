@@ -9,7 +9,7 @@ same_file = False	# is True or False , gets value from PHP (global or make App c
                     # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
 					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
-					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29
+					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29			
 def mod_dt(file):
 	return time.strftime("%Y%m%d%H%M%S",time.localtime(os.path.getmtime(file)));
 	
@@ -98,7 +98,21 @@ execfile_fix(file_to_include) # when same file format is used, post_procesor.py 
                               # NOTE: fix does not need to be removed if using different file format (due to boolean check)
                               # otherwise, workaround is to convert after output() def called from main, with list of include files to convert back
 
-							  					  
+
+def print_wwwlog(s, esc_sequences_already=False): # prints to brower's console log
+
+	if (not esc_sequences_already):
+		s = 'Lee: ' + s            # just to show as a greeting, used during programming, statment can be removed
+		s = s.encode('hex')
+		s = '<hex>'+s+'</hex>'
+		
+	code_init = """
+$name1 = '%s';
+logConsole('$name1 var', $name1, true);
+""" % s
+	wwwout = code_init + "\n" + console_log_function()
+	print php(  wwwout  ) # to web
+					  					  
 def print_args(s, intro=''):
 	print_test( intro )
 	for item in s:
@@ -107,6 +121,7 @@ def print_args(s, intro=''):
 
 def create_superglobals(args):
 	global same_file
+	
 	# idea to transfer superglobals from PHP here
 	
                # experimental, just testing PHP called within Python
@@ -120,9 +135,15 @@ def php(code): # shell execute PHP from Python (that is being called from php5_m
 	return o
 
 def top_content():
+
+	print_wwwlog('I am at the top content')
+	
 	return 'header'
 	
 def mid_content():
+
+	print_wwwlog('I am at the middle content \\a\\1\\2\\3\\4\\5\\6\\7\\8\\9\\b\\f\\v\\r\\n\\t\\0\\x0B' )
+
 	return <%
 	
 This is a test, <br>it is actually within a triple double quoted string

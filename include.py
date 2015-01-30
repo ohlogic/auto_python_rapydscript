@@ -52,10 +52,37 @@ $js = <<<JSCODE
      console.log = console.log || function(name, data){};
      // end of fallback
  
+	// I innovated a start and end tag for hexadecimal content (the tag is of course arbitrary, though seems to fit the purpose (apropos))
+    
+	function not(s){return !s;}
+	
+	function hex2asc(pStr) {
+	
+		if (not( typeof pStr === 'string') )			// alert(typeof pStr);
+		return pStr;
+
+		// todo: to check for minimum lengths at this point 
+
+		var startHexTag = pStr.substr(0, 5);			// start tag to indicate hexadecimal content is <hex>
+
+		var endHexTag = pStr.substr(pStr.length - 6); 	// end tag to indicate hexadecimal content is </hex>
+
+		if ( not ( startHexTag === "<hex>" && endHexTag === "</hex>" ) )
+		return pStr;
+
+		var data = pStr.substring(5, pStr.length - 6 )
+
+        tempstr = '';
+        for (b = 0; b < data.length; b = b + 2) {
+            tempstr = tempstr + String.fromCharCode(parseInt(data.substr(b, 2), 16));
+        }
+        return tempstr;
+    }
+ 
      console.log('$name');
      console.log('------------------------------------------');
      console.log('$type');
-     console.log($data);
+     console.log(hex2asc($data));
      console.log('\\\\n');
 </script>
 JSCODE;
@@ -64,8 +91,8 @@ JSCODE;
      } # end logConsole
 	 
 	 
-echo( ' <br> {**{hello}**} <br>');	 
+//echo( ' <br> {**{hello}**} <br>');	 
 
-echo( '{**{howdy}**}');
+//echo( '{**{howdy}**}');
 
 %>.format (  hello='hello world', howdy='very well thanks' )
