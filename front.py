@@ -5,8 +5,8 @@ import time
 import ast
 
 same_file = True	# is True or False , gets value from PHP (global or make App class due to 
-                    # global variables frowned upon, i.e., not best practices)
-                    # began to import from PHP, still a todo, at this time
+                        # global variables frowned upon, i.e., not best practices)
+                        # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
 					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
 					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29
@@ -103,11 +103,14 @@ execfile_fix(file_to_include) # when same file format is used, post_procesor.py 
 
 
 def print_wwwlog(s, esc_sequences_already=False): # prints to brower's console log
-
-	if (not esc_sequences_already):
-		s = 'Lee: ' + s            # just to show as a greeting, used during programming, statment can be removed
-		s = s.encode('hex')
-		s = '<hex>'+s+'</hex>'
+	
+	if (not esc_sequences_already):      # to get close to wysiwyg --   and perhaps innovative, Unicode tags proposed
+		s = 'Lee: ' + s.encode('ascii')  # just to write lines, used during programming, statement can be removed
+                                         # the way print_wwwlog() works is that it will either print ascii messages to the console or, you can escape characters, 
+										 # that will give you the same result, that will have to be interpreted anyway at the web browser as unicode,
+										 # perhaps put <unicode></unicode> and or <utf-8></utf-8> tags (and their uppercase forms) that I have arbitrarily innovated around utf-8 strings to identify that.
+		s = s.encode('hex')              # though perhaps browser's would identify that, or not, otherwise comment tags could be put around the unicode tags just mentioned <-- --> and javscript would convert to the required unicode text characters
+		s = '<hex>'+s+'</hex>'           # if newlines actually needed, then there's use of html tags, e.g., <br> and so on... (perhaps even arbitrary tags for things like tabs <tabs> defined by css and so on...)
 		
 	code_init = <%
 $name1 = '%s';

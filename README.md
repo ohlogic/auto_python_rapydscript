@@ -7,7 +7,7 @@ in addition to a web page written in python, output through minimal php code usi
 The project has since grown to innovate quick tags for python source code that use asp like tags
 of <% and %> to denote triple quoted strings, useful new format variable tags to allow curly braces
 within JavaScript without escaping them (i.e., two curly braces to represent one within python triple quoted stings),
-it allows syntax highlighting by text editors of a programming languauge keywords within the source code 
+it allows syntax highlighting by text editors of a programming language keywords within the source code 
 between these open and close tags,
 as well as the innovative feature of hexadecimal tags to send content to the web browser.
 
@@ -37,7 +37,8 @@ Added a very innovative feature of hexadecimal open and close tags of <hex> and 
 of hexadecimal type converted from a string to the web browser, from there it is converted back to a string. 
 For the initial purpose to deal with tedious python escape characters.
 In another update to source code, added the feature to have quick tags for python triple quoted strings 
-for the assignment operator (to a variable).
+for the assignment operator (to a variable).  For the third update this day, a compromise to print lines of statements
+so that escaping characters not required, and perhaps an innovative idea on unicode tags.
 
 2015-01-29
 Added the feature to compile the include python files only when its been edited, modified (similar to the feature added on 2015-01-26 
