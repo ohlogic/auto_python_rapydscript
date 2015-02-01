@@ -7,12 +7,24 @@ import ast
 same_file = True	# is True or False , gets value from PHP (global or make App class due to 
                         # global variables frowned upon, i.e., not best practices)
                         # began to import from PHP, still a todo, at this time
-PRINTOUT = False	# for print statements used by print_test() to review variables, etc. perhaps a form of browser console logging is the way to go
-					# https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
-					# this todo: done 2015.01.28, cleaned-up (refactored) on 2015.01.29
-					# 2015.01.30 added feature to allow python quick tags to triple quoted strings
+PRINTOUT = False	# for print statements used by print_test() to review variables, etc. for a form of browser console logging
+					# 2015.01.30 added feature to allow python quick tags to triple quoted strings for assignment operators
 					# triple quoted string can still be used, but not between <% and %> because they represent triple double quotes, and that would be
 					# triple double quotes within triple double quotes (quotes within TDQ need to be escaped with the backslash)
+
+print_literal = False 
+
+def rawstringify_outerquote(s):
+    for format in ["r'{}'", 'r"{}"', "r'''{}'''", 'r"""{}"""']:
+        rawstring = format.format(s)
+        try:
+            reparsed = ast.literal_eval(rawstring)
+            if reparsed == s:
+                return rawstring[1]
+        except SyntaxError:
+            pass
+    raise ValueError('rawstringify received an invalid raw string')
+	
 def mod_dt(file):
 	return time.strftime("%Y%m%d%H%M%S",time.localtime(os.path.getmtime(file)));
 	
@@ -102,10 +114,20 @@ execfile_fix(file_to_include) # when same file format is used, post_procesor.py 
                               # otherwise, workaround is to convert after output() def called from main, with list of include files to convert back
 
 
-def print_wwwlog(s, esc_sequences_already=False): # prints to brower's console log
+def print_wwwlog(s, literal = True):    # prints to brower's console log
 	
-	if (not esc_sequences_already):      # to get close to wysiwyg --   and perhaps innovative, Unicode tags proposed
-		s = 'Lee: ' + s.encode('ascii')  # just to write lines, used during programming, statement can be removed
+	if (literal):
+		quote = rawstringify_outerquote(s)   # these 5 statements will occur when we turn on the  print_literal option
+		if (quote == '"' ):                  # or    literal = True     
+			s = s.replace('\\"', '"')        #
+                                             # as of at this moment, it converts each print_wwwlog statement to
+		if (quote == "'" ):                  # raw string literal with a new and innovative  simple_preprocessor_auto_print_literal.py  step
+			s = s.replace("\\'", "'")        # the reason is to output messages to the brower console without escaping (actually its the most minimal escaping required)
+                                             # see the comment about "TWO SMALL CASES TO ESCAPE WITH RAW STRING LITERALS" down below
+											 
+	# not to encode to ascii, better to use raw strings 
+	#if (not esc_sequences_already):     # to get close to wysiwyg --   and perhaps innovative, Unicode tags proposed
+	#	s = 'Lee: ' + s.encode('ascii')  # just to write lines, used during programming, statement can be removed
                                          # the way print_wwwlog() works is that it will either print ascii messages to the console or, you can escape characters, 
 										 # that will give you the same result, that will have to be interpreted anyway at the web browser as unicode,
 										 # perhaps put <unicode></unicode> and or <utf-8></utf-8> tags (and their uppercase forms) that I have arbitrarily innovated around utf-8 strings to identify that.
@@ -124,10 +146,8 @@ def print_args(s, intro=''):
 	for item in s:
 		print_test( 'ARG:(' + item + ')' )
 		
-
 def create_superglobals(args):
 	global same_file
-	
 	# idea to transfer superglobals from PHP here
 	
                # experimental, just testing PHP called within Python
@@ -141,14 +161,24 @@ def php(code): # shell execute PHP from Python (that is being called from php5_m
 	return o
 
 def top_content():
-
-	print_wwwlog('I am at the top content')
+    
+	print_wwwlog(  """I am at " the top " content""")
 	
 	return 'header'
 	
 def mid_content():
 
-	print_wwwlog('I am at the middle content \\a\\1\\2\\3\\4\\5\\6\\7\\8\\9\\b\\f\\v\\r\\n\\t\\0\\x0B' )
+	print_wwwlog( r'''I am " at """" \'\'\'\'\'\'\'{}{}{}{} {{{{ }}}} the middle content \a\1\2\3\4\5\6\7\8\9\b\f\v\r\n\t\0\x0B
+	
+	
+I have denoted newlines within a raw string , sent to the web browser that also interprets as newlines
+And saving the file also is fine.
+
+<br>
+<br>
+hello world  (but html characters are not interpreted this way)
+'''    )  # TWO SMALL CASES TO ESCAPE WITH RAW STRING LITERALS, a backslash before a single quote or double quote 
+          # (depending what are the outer quotes) and if the intent is to have a backslash at the end of a string, need two of them
 
 	return <%
 	
@@ -310,3 +340,8 @@ if __name__ == "__main__":  # in the case not transferring data from php, then s
 		sys.exit(1)
 		
 	output(sys.argv[1])
+
+#   https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
+#   http://stackoverflow.com/questions/843277/how-do-i-check-if-a-variable-exists-in-python same as
+#   to test variable existence http://stackoverflow.com/a/843293  otherwise .ini for initial options
+#   nice unicode description: https://greeennotebook.wordpress.com/2014/05/24/character-sets-and-unicode-in-python/

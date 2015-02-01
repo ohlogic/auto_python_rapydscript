@@ -32,6 +32,18 @@ Also note:
 The RapydScript simple example provided displays its output 
 through the browser's console log, Firebug's console log, etc.
 
+2015-01-31
+With a second implementation, having discovered that raw literal strings are the solution to dealing with the
+tedious python escaping of characters when outputing messages to the browser console window (instead of .encode('ascii'))
+I create a second pre processor step by the name of simple_preprocessor_auto_print_literal.py to convert these print_wwwlog()
+statements to the browser's console log to raw strings automatically.  Also this is prelude to a ascii representation
+form of unicode within innovative unicode type python quick tags, in the works, stay tuned.
+This is a sample of the new feature I'm creating:
+print r'hello<br>  <!-- <unicode>\xe5</unicode>lpha   <unicode>\xdf</unicode>ravo, <unicode>\u1e09</unicode>harlie  -->   <br> world \a'
+And instead of the html comments, the idea is to use html div tags and show the unicode only when JavaScript has easily, correctly
+converted the "ascii unicode text" of the unicode character.  For perhaps many to actually enjoy unicode instead of tediously
+reading of for example many lines of source code to examine what escape characters need to be done.	
+
 2015-01-30
 Added a very innovative feature of hexadecimal open and close tags of <hex> and </hex> to reliably transport content 
 of hexadecimal type converted from a string to the web browser, from there it is converted back to a string. 
