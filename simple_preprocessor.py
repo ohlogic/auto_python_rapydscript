@@ -6,14 +6,14 @@ def print_args(s):
 
 def algorithm(s, tw):
 	if (tw):
-		s = s.replace('return <%', 'return training_wheels_bit_slower_to_remove("""')
-		s = s.replace('= <%', '= training_wheels_bit_slower_to_remove("""')		
-		s = s.replace('<%', 'print training_wheels_bit_slower_to_remove("""').replace('%>', '""")')
+		s = s.replace('return <%', 'return training_wheels_bit_slower_to_remove(r"""')
+		s = s.replace('= <%', '= training_wheels_bit_slower_to_remove(r"""')		
+		s = s.replace('<%', 'print training_wheels_bit_slower_to_remove(r"""').replace('%>', '""")')
 
 	else:
-		s = s.replace('return <%', 'return """')
-		s = s.replace('= <%', '= """')		
-		s = s.replace('<%', 'print """' ).replace('%>', '"""')
+		s = s.replace('return <%', 'return r"""')
+		s = s.replace('= <%', '= r"""')		
+		s = s.replace('<%', 'print r"""' ).replace('%>', '"""')
 	return s
 
 def modify_it(file, TW=False):
