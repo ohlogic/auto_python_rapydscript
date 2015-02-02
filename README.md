@@ -110,13 +110,11 @@ to deal with curly brackets within triple quoted strings when used together with
 NOTES:
 
 2015.02.02
-
 With widespead adoption: Browser implementation may decide to abbreviate the "unicode type python quick tag" 
 to <uni></uni> (equivalent in length to the innovated <hex></hex> python quick tag) 
 from <unicode></unicode> a feature that at face value seem reasonable.
 
 2015.02.02
-
 Motivation behind the <unicode></unicode> tags (unicode type python quick tags):
 Premise: For too long have programmers been burdened by unicode to internally mentally parse whether 
 what they see is what they get (spin on the wysiwyg principle).  Therefore, I've created the innovative pyton quick tags 
