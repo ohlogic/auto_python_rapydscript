@@ -53,7 +53,9 @@ def process(lines):
 					print 'point #4 - IS FOUND (double quote) '
 			else: # therefore neither exist in string i.e.,  not is_found(s) and not is_found(d)
 					# exit somehow
+					out += line   #  its an early go to next item in the loop,  can r literal strings within quotes  not variables or returned strings from function returns
 					print '<br><br> Nothing found <br><br>'
+					continue
 			
 			print 'VAL IS: ('+ str(val) + ')'
 			print 'VAL VALUE IS: ('+ line[val] + ')'
@@ -99,7 +101,7 @@ def modify_it(file):   # received _compiled.py
 		lines = rp.readlines()  # includes newlines, otherwise  .read().splitlines()  removes newlines
 		data = process(lines)
 		
-	with open(file , 'w') as wp:
+	with open(file[:-3]+'ToCompare_with_compiled.py' , 'w') as wp:
 		data = wp.write(  data  )
 		
 
