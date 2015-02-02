@@ -10,6 +10,14 @@ within JavaScript without escaping them (i.e., two curly braces to represent one
 it allows syntax highlighting by text editors of a programming language keywords within the source code 
 between these open and close tags,
 as well as the innovative feature of hexadecimal tags to send content to the web browser.
+Also added the feature of making all quick tag <% %> strings (that represent triple double quoted strings) 
+to be raw literal strings for the reason that the output intended to be displayed in a web browser, therefore
+less escaping of special characters, and the newline is of course the html <br> tag on the web.
+
+In addition to the <hex></hex> I created, another feature I have innovated is a 
+html like "unicode python quick tag" of <unicode></unicode> for improved structure to html markup.
+
+
 
 Requirements:
 
@@ -37,6 +45,15 @@ Added a comment at the end of index.php to explain a found senario to further re
 and NOT the one file format, this comment explanation then makes the simple_postprocessor.py  unnecessary and during a source code refactoring can be removed.
 In another update to source code, add the feature of making the quick python tags of <%  %> to now represent 
 raw literal triple double quotes.  This is as a prelude step to a new innovative feature of unicode type python quick tags that is yet to be added later today.
+ 
+In addition to the <hex></hex> I previously created, another feature I have innovated is a html like "unicode python quick tag" for improved structure to html markup.
+ 
+In the third update to source code, I've now added the feature of html like unicode type python quick tags to wrap the
+quick tags feature of <% %> that represents a triple double quoted string.  In this initial version the way it works
+is by the programmer adding     .unicode_markup()      to the dynamically added object,class to be used ONLY
+as a transition step that drops the <unicode> and </unicode> tags, leaving the content within the tag unchanged.
+Perhaps later version will dynamically include the  .unicode_markup()  method as long as I create a nice way to transfer its
+boolean switch.
 
 2015-01-31
 With a second implementation, having discovered that raw literal strings are the solution to dealing with the
@@ -87,6 +104,17 @@ Added the feature of python tags, open and close <%  %> for triple quoted string
 to deal with curly brackets within triple quoted strings when used together with the format function.
 
 
+NOTES:
+2015.02.02
+With widespead adoption: Browser implementation may decide to abbreviate the "unicode type python quick tag" 
+to <uni></uni> (equivalent in length to the innovated <hex></hex> python quick tag) 
+from <unicode></unicode> a feature that at face value seem reasonable.
 
-
+2015.02.02
+Motivation behind the <unicode></unicode> tags (unicode type python quick tags):
+Premise: For too long have programmers been burdened by unicode to internally mentally parse whether 
+what they see is what they get (spin on the wysiwyg principle).  Therefore, I've created the innovative pyton quick tags 
+as a step to structure unicode in addtion to the feature of reducing the need to escape characters with the use of 
+raw string literals as a side issue, with this additional feature of unicode tags, 
+it improves readability of source code.
 

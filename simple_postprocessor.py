@@ -2,13 +2,13 @@ import sys
 
 def algorithm(s, tw):
 	if (tw):
-		s = s.replace('return training_wheels_bit_slower_to_remove(r"""', 'return <%')
-		s = s.replace('= training_wheels_bit_slower_to_remove(r"""', '= <%')			
-		s = s.replace('print training_wheels_bit_slower_to_remove(r"""', '<%').replace('""")', '%>')	
+		s = s.replace('return utags(training_wheels_bit_slower_to_remove(r"""', 'return <%')
+		s = s.replace('= utags(training_wheels_bit_slower_to_remove(r"""', '= <%')			
+		s = s.replace('print utags(training_wheels_bit_slower_to_remove(r"""', '<%').replace('"""))', '%>')	
 	else:
-		s = s.replace('return r"""', 'return <%')
-		s = s.replace('= r"""', '= <%') 			
-		s = s.replace('print r"""', '<%').replace('"""', '%>')	
+		s = s.replace('return utags(r"""', 'return <%')
+		s = s.replace('= utags(r"""', '= <%') 			
+		s = s.replace('print utags(r"""', '<%').replace('""")', '%>')	
 	return s
 	
 def modify_it(file, TW=False):

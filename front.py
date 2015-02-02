@@ -14,6 +14,14 @@ PRINTOUT = False	# for print statements used by print_test() to review variables
 
 print_literal = False 
 
+                  # utags will return the string with unicode type python quick tags ON as its initial value, by default.
+                  # for convenience, the utags is a string object that creates a version of the source code when JavaScript is off as a transition until browser native implementation
+class utags(str): # or unicode_show  ,  whichever is a more appropriate label
+
+	def unicode_markup(self, bool=True):
+		return self if bool else self.replace('<unicode>', '').replace('</unicode>','')
+
+		
 def rawstringify_outerquote(s):
     for format in ["r'{}'", 'r"{}"', "r'''{}'''", 'r"""{}"""']:
         rawstring = format.format(s)
@@ -265,6 +273,10 @@ PHP test: {**{php_test}**}
 </body>
 </html>
 
+
+<unicode>hello world</unicode>
+
+
 %>.format (  
 	# variables used
 	top_content = top_content(),
@@ -276,7 +288,10 @@ PHP test: {**{php_test}**}
                                      # resolution information, etc. to select which css that fits	
 
 testing_output = this_is_a_test()    # test of include file using quick tags python syntax
+
 )
+
+#.unicode_markup()
 
 	# testing writing print statement to the web browser 
 	# the intent is to create a python function to wrap the writing with print statements to the web browser's console
