@@ -114,7 +114,7 @@ from <unicode></unicode> a feature that at face value seem reasonable.
 Motivation behind the <unicode></unicode> tags (unicode type python quick tags):
 Premise: For too long have programmers been burdened by unicode to internally mentally parse whether 
 what they see is what they get (spin on the wysiwyg principle).  Therefore, I've created the innovative pyton quick tags 
-as a step to structure unicode in addtion to the feature of reducing the need to escape characters with the use of 
+as a step to structure unicode in addition to the feature of reducing the need to escape characters with the use of 
 raw string literals as a side issue, with this additional feature of unicode tags, 
-it improves readability of source code.
+it improves readability of source code by the use of this <unicode></unicode> html like markup tag feature.
 
