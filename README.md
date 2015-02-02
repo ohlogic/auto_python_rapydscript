@@ -12,7 +12,7 @@ between these open and close tags,
 as well as the innovative feature of hexadecimal tags to send content to the web browser.
 Also added the feature of making all quick tag <% %> strings (that represent triple double quoted strings) 
 to be raw literal strings for the reason that the output intended to be displayed in a web browser, therefore
-less escaping of special characters, and the newline is of course the html <br> tag on the web.
+less escaping of special characters, and the newline is of course the html (br tag with angle backets) on the web.
 
 In addition to the <hex></hex> I created, another feature I have innovated is a 
 html like "unicode python quick tag" of <unicode></unicode> for improved structure to html markup.
@@ -65,7 +65,7 @@ I create a second pre processor step by the name of simple_preprocessor_auto_pri
 statements to the browser's console log to raw strings automatically.  Also this is prelude to a ascii representation
 form of unicode within innovative unicode type python quick tags, in the works, stay tuned.
 This is a sample of the new feature I'm creating:
-print r'hello<br>  <!-- <unicode>\xe5</unicode>lpha   <unicode>\xdf</unicode>ravo, <unicode>\u1e09</unicode>harlie  -->   <br> world \a'
+print r'hello (br tag with angle brackets)  <!-- <unicode>\xe5</unicode>lpha   <unicode>\xdf</unicode>ravo, <unicode>\u1e09</unicode>harlie  -->   (br tag with angle brackets) world \a'
 And instead of the html comments, the idea is to use html div tags and show the unicode only when JavaScript has easily, correctly
 converted the "ascii unicode text" of the unicode character.  For perhaps many to actually enjoy unicode instead of tediously
 reading of for example many lines of source code to examine what escape characters need to be done.	
@@ -108,12 +108,15 @@ to deal with curly brackets within triple quoted strings when used together with
 
 
 NOTES:
+
 2015.02.02
+
 With widespead adoption: Browser implementation may decide to abbreviate the "unicode type python quick tag" 
 to <uni></uni> (equivalent in length to the innovated <hex></hex> python quick tag) 
 from <unicode></unicode> a feature that at face value seem reasonable.
 
 2015.02.02
+
 Motivation behind the <unicode></unicode> tags (unicode type python quick tags):
 Premise: For too long have programmers been burdened by unicode to internally mentally parse whether 
 what they see is what they get (spin on the wysiwyg principle).  Therefore, I've created the innovative pyton quick tags 
