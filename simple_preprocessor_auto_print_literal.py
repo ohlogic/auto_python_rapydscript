@@ -101,7 +101,7 @@ def modify_it(file):   # received _compiled.py
 		lines = rp.readlines()  # includes newlines, otherwise  .read().splitlines()  removes newlines
 		data = process(lines)
 		
-	with open(file[:-3]+'ToCompare_with_compiled.py' , 'w') as wp:
+	with open(file , 'w') as wp:
 		data = wp.write(  data  )
 		
 
