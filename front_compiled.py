@@ -195,7 +195,7 @@ This is a test, <br>it is actually within a triple double quoted string
 """))
 	
 def end_content():
-	return 'footer'
+	return '<unicode>footer</unicode>'
 	
 # in the case not transferring data from php using multiple domains, simply revert to a previous version, commit 
 def domain_name(s):   
@@ -277,7 +277,7 @@ PHP test: {**{php_test}**}
 <unicode>hello world</unicode>
 
 
-""")).format (  
+""").format (  
 	# variables used
 	top_content = top_content(),
 	mid_content = mid_content(),
@@ -289,9 +289,10 @@ PHP test: {**{php_test}**}
 
 testing_output = this_is_a_test()    # test of include file using quick tags python syntax
 
-)
-
-#.unicode_markup()
+)).unicode_markup()  # place the keyword False in between .unicode_markup() parenthesis to remove the unicode type python quick tags, 
+                     # i.e., to drop the <unicode> and </unicode> tags but not the contents,text between the tags
+                     # by giving the method unicode_markup() the argument of False it will remove the unicode tags
+                     # (by removing the argument or by setting it to True that is the same thing) the unicode tags remain intact.
 
 	# testing writing print statement to the web browser 
 	# the intent is to create a python function to wrap the writing with print statements to the web browser's console
