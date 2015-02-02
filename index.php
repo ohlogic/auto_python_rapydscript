@@ -163,4 +163,87 @@ function right($str, $length) {return substr($str, -$length);  }
 #function str($s){	   // should just return 'true' or 'false' and name it str_bool() but perhaps str() can be extended
 #	if (is_bool($s) == true) return ( ($s) ? 'true' : 'false'); else return 'Different type'; }
 // footnote: todo, each *.pyj in a directory
+
+/* Project Notes:
+2015.02.02
+at github #37 commit
+
+
+TRIPLE DOUBLE QUOTE AND ) ISSUE          (only when one file format is used)
+
+e.g.,      """)
+
+
+The senario has been found that when using triple quoted strings in a program:
+
+                           i.e., when using """ string """      and when on multiple lines (NOTE: use of triple single quoted strings is ok,works e.g.,  '''  string ''' and when triple single quoted strings on multiple lines work too) 
+                           
+						   i.e., when using """  string
+	string					   
+"""						   
+
+THAT
+
+the closing 
+""") is always converted to %>
+
+
+example:
+
+Due to:
+
+""")  
+being converted to
+%>
+
+but in print ("""   string """)  that is not the intended result       # senario of one line 
+
+because it would be converted to
+
+print ("""   string %>
+
+
+and when   print("""     string
+
+
+""")                  # and senario of multiple lines would be tedious to determine whether to convert to %> or not
+
+because it would be converted to
+
+print("""     string
+
+
+%>  that is also not the intended result    # senario of multiple line triple double quotes
+
+(Again: there is no issue when using   triple single quotes     in a program )
+(  there is also no issue with using <%  %> quick tags     it works fine, ok as well )
+
+The fix to resolve when using triple double quotes,  the solution is simply to add a space character
+e.g., """) 
+is simply resolved with 
+
+      """ )             #  note the space between the triple double quote and the close parenthesis
+
+Therefore based on findings of this senario, the recommendation is to:
+1) Simply use quick tags to represent triple quoted strings every time you want to use a triple quoted string   (note that it represents, it is converted to a triple double quoted string)
+2) Can use python quick tags of <% %>   and can also use triple single quoted strings,  no problem also, i.e., without issue.
+
+Summary Description:
+When triple double quoted string is used, this    TRIPLE DOUBLE QUOTE AND ) ISSUE    can be an issue.
+
+Summary of Solution:
+When using triple double quoted strings, any """)  requires at minimum a space between  e.g.,     """ )       
+
+Final note:  This   TRIPLE DOUBLE QUOTE AND ) ISSUE     only occurs when  one file format  is True
+             When   one  file  format  is False ,  can also use  triple double quoted strings also.
+			 
+Final sidenote:  Anyway, it would be unwise in any production code to use the one file format due to it being
+                 compiled each time a page is requested, instead of only when an edit occurs to the source code.
+                 When using different the different file format the result is that the simple_postprocessor.py is NOT used.
+                 Therefore, this entire 2015.02.02 note about  triple double quotes and the close parenthesis is not a problem
+                 when using different file format.
+				 Therefore, the source code can be refactored to remove the one file format, it would simplify the source code, thus reducing complexity.
+this note appears at github #38 commit
+Thanks for reading this note,consideration and appologies for any confusion it may have caused.  The different file format is simply the solution, the way to go.
+*/
 ?>

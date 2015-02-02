@@ -32,6 +32,10 @@ Also note:
 The RapydScript simple example provided displays its output 
 through the browser's console log, Firebug's console log, etc.
 
+2015-02-02
+Added a comment at the end of index.php to explain a found senario to further recommend the different file format
+and NOT the one file format, this comment explanation then makes the simple_postprocessor.py  unnecessary and during a source code refactoring can be removed.
+
 2015-01-31
 With a second implementation, having discovered that raw literal strings are the solution to dealing with the
 tedious python escaping of characters when outputing messages to the browser console window (instead of .encode('ascii'))

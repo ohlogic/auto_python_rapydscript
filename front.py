@@ -4,8 +4,8 @@ from subprocess import PIPE, Popen, STDOUT
 import time
 import ast
 
-same_file = True	# is True or False , gets value from PHP (global or make App class due to 
-                        # global variables frowned upon, i.e., not best practices)
+same_file = False	# is True or False , gets value from PHP (global or make App class due to        # Note, 2015.02.02: same_file set to True not recommended
+                        # global variables frowned upon, i.e., not best practices)                   # because of the note comment explained in index.php
                         # began to import from PHP, still a todo, at this time
 PRINTOUT = False	# for print statements used by print_test() to review variables, etc. for a form of browser console logging
 					# 2015.01.30 added feature to allow python quick tags to triple quoted strings for assignment operators
