@@ -54,6 +54,9 @@ is by the programmer adding     .unicode_markup()      to the dynamically added 
 as a transition step that drops the <unicode> and </unicode> tags, leaving the content within the tag unchanged.
 Perhaps later version will dynamically include the  .unicode_markup()  method as long as I create a nice way to transfer its
 boolean switch.
+Note that in this version, the method should be appended to  %>.unicode_markup(False)  but if using format variables, before  the .format() method
+otherwise it is required by you to make a small edit to put the string that is the argument to utags  around the format method also.
+Perhaps a later version will address that when dynamically appending the  .unicode_markup()
 
 2015-01-31
 With a second implementation, having discovered that raw literal strings are the solution to dealing with the
