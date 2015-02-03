@@ -40,6 +40,10 @@ Also note:
 The RapydScript simple example provided displays its output 
 through the browser's console log, Firebug's console log, etc.
 
+2015-02-03
+Added a way to optionally show unicode type python quick tags with a boolean from index.php to display source code with or without unicode type python quick tags.  
+Note that this feature is commented out initially, by default.
+
 2015-02-02
 Added a comment at the end of index.php to explain a found senario to further recommend the different file format
 and NOT the one file format, this comment explanation then makes the simple_postprocessor.py  unnecessary and during a source code refactoring can be removed.

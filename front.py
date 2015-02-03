@@ -194,8 +194,8 @@ hello world  (but html characters are not interpreted this way)
 	return <%
 	
 This is a test, <br>it is actually within a triple double quoted string
-
-%>
+{**{testing}**}
+%>.format( testing = 'HELLO WORLD(testing)' )
 	
 def end_content():
 	return 'footer'
@@ -280,7 +280,10 @@ PHP test: {**{php_test}**}
 <unicode>hello world</unicode>
 
 
-%>.format (  
+
+	
+
+%>.format (   #  %:)> # the arbitrary find string is exactly this 20 characters long, quick workaround to subtract a parenthesis keyword operator # happy face keyword to rid a frown ( removes a close parenthesis ) (an arbitrary keyword created to remove one text character)
 	# variables used
 	top_content = top_content(),
 	mid_content = mid_content(),
@@ -292,8 +295,9 @@ PHP test: {**{php_test}**}
 
 testing_output = this_is_a_test()    # test of include file using quick tags python syntax
 
-)
+) # %%>                                              
 
+# statements on line #286 and #298 uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
 #.unicode_markup()	# this is the method to remove the unicode type python quick tags, and give it a False argument
 					# the utags wrapper already is automatically created
 					# Usage:
@@ -360,13 +364,15 @@ if __name__ == "__main__":  # in the case not transferring data from php, then s
 	create_superglobals(sys.argv)
 	print_args(sys.argv, '<br>HERE front.py '+'<br>')
 	
-	if( not len(sys.argv) >= 3 ):
+	if( not len(sys.argv) >= 2 ):
 		print "argument is required, which domain name from the initial, starting PHP"
-		print "argument required, same file format bool"
 		sys.exit(1)
 		
-	output(sys.argv[1])
+	output(name=sys.argv[1])
 
+
+	
+	
 #   https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
 #   http://stackoverflow.com/questions/843277/how-do-i-check-if-a-variable-exists-in-python same as
 #   to test variable existence http://stackoverflow.com/a/843293  otherwise .ini for initial options

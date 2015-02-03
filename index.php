@@ -5,6 +5,8 @@ $one_file_format        = False;	// when True like before, a single source file 
 									// Note: when False, the file front_compiled.py is created
 $auto_print_wwwlog_literal = True;
 
+$str_bool_uni_value = 'False';
+
 // Now, auto compiling a RapydScript to JavaScript if needed before running the web page
 
 // Note:
@@ -88,13 +90,13 @@ else {
 	
 	if ( not( is_compiled($source, $compiled) ) ) {
 		echo '(PYTHON COMPILING)';
-		echo passthru(	'python simple_preprocessor.py -TW "'.$source.'" "'.$compiled.'"  2>&1  && '.
+		echo passthru(	'python simple_preprocessor.py -TW "'.$source.'" "'.$compiled.'" "'.$str_bool_uni_value.'" 2>&1  && '.
 						'python simple_preprocessor_auto_print_literal.py "'.$compiled.'" "'.str_bool($auto_print_wwwlog_literal).'"  2>&1  && '.
-						'python "'.$compiled .'" ' .domain_name_endswith().' "'.str_bool($one_file_format).'"  2>&1  ');
+					  'python "'.$compiled .'" "' .domain_name_endswith().'"  2>&1 ');
 	}
 	else {
 		echo '(ALREADY COMPILED)';
-		echo passthru('python "'.$compiled. '" ' .domain_name_endswith().' "'.str_bool($one_file_format).'"  2>&1 ');
+		echo passthru('python "'.$compiled. '" "' .domain_name_endswith().'"  2>&1 ');
 	}
 }
 
