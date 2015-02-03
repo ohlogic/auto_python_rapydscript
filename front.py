@@ -75,7 +75,7 @@ def compile_include_quick_tags(file):
 	
 	print '(INCLUDE NOT compiled yet, therefore COMPILING)'
 	
-	os.system('"python.exe simple_preprocessor.py -TW '+file+' '+compiled+'  2>&1"')
+	os.system('"python.exe simple_preprocessor.py -TW '+file+' '+compiled+' whateverDNMfilterByoutputfunction 2>&1"')
 	
 	print_test( 'INCLUDING THIS FILE(' + compiled + ')' )
 	return compiled # run pre_processor on it, with file being the source and  it as the dest
