@@ -137,8 +137,8 @@ def print_wwwlog(s, literal = True):    # prints to brower's console log
 	#if (not esc_sequences_already):     # to get close to wysiwyg --   and perhaps innovative, Unicode tags proposed
 	#	s = 'Lee: ' + s.encode('ascii')  # just to write lines, used during programming, statement can be removed
                                          # the way print_wwwlog() works is that it will either print ascii messages to the console or, you can escape characters, 
-										 # that will give you the same result, that will have to be interpreted anyway at the web browser as unicode,
-										 # perhaps put <unicode></unicode> and or <utf-8></utf-8> tags (and their uppercase forms) that I have arbitrarily innovated around utf-8 strings to identify that.
+                                         # that will give you the same result, that will have to be interpreted anyway at the web browser as unicode,
+                                         # perhaps put <unicode></unicode> and or <utf8></utf8> tags (and their uppercase forms) that I have arbitrarily innovated around utf8 strings to identify that.
 		s = s.encode('hex')              # though perhaps browser's would identify that, or not, otherwise comment tags could be put around the unicode tags just mentioned <-- --> and javscript would convert to the required unicode text characters
 		s = '<hex>'+s+'</hex>'           # if newlines actually needed, then there's use of html tags, e.g., <br> and so on... (perhaps even arbitrary tags for things like tabs <tabs> defined by css and so on...)
 		
@@ -170,8 +170,11 @@ def php(code): # shell execute PHP from Python (that is being called from php5_m
 
 def top_content():
     
-	print_wwwlog(  """I am at " the top " content""")
-	
+	print_wwwlog( '''I am at " the top " content''' ) # NOTE: better to use triple single quotes , best to put a space before and after a triple quoted string (though not necessary for triple SINGLE quotes)
+	                                                  # (the open and close quick tags (< % % > with no spaces) to denote a 
+                                                      # triple double quoted string ONLY for return and assignment statements at this time) 
+                                                      # due to a space needed before closing parenthesis 
+                                                      # when using triple DOUBLE quotes (no restriction with triple SINGLE quotes by you, the programmer)
 	return 'header'
 	
 def mid_content():
@@ -291,8 +294,16 @@ testing_output = this_is_a_test()    # test of include file using quick tags pyt
 
 )
 
-#.unicode_markup()
-
+#.unicode_markup()	# this is the method to remove the unicode type python quick tags, and give it a False argument
+					# the utags wrapper already is automatically created
+					# Usage:
+					# place the keyword False in between .unicode_markup() parenthesis to remove the unicode type python quick tags,
+					# i.e., to drop the <unicode> and </unicode> tags but not the contents,text between the tags
+					# by giving the method unicode_markup() the argument of False it will remove the unicode tags
+					# (by removing the argument or by setting it to True that is the same thing) the unicode tags remain intact.
+					# (See front_compiled.py in github commit #47 of this project that I specially modified to show a working usage example)
+					# Otherwise, modify this latest version according to usage description
+					
 	# testing writing print statement to the web browser 
 	# the intent is to create a python function to wrap the writing with print statements to the web browser's console
 	code_init = <%
