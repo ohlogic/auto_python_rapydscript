@@ -41,7 +41,10 @@ The RapydScript simple example provided displays its output
 through the browser's console log, Firebug's console log, etc.
 
 2015-01-05
-Small edit to display a canvas tag using Python like Rapydscript (via Javascript)
+Small edit to display a canvas tag using Python like Rapydscript (via Javascript).
+In another update to source, added feature to allow python quick tags between parentheses, this is in addition to
+quick tags (being <% %> triple quoted strings) are allowed to be used to an assignment operator to a variable, and
+can be used to print out to the web page (see simple_preprocessor.py for details).
 
 2015-02-03
 Added a way to optionally show unicode type python quick tags with a boolean from index.php to display source code with or without unicode type python quick tags.  

@@ -70,12 +70,12 @@ def compile_include_quick_tags(file):
 		compiled = file
 	
 	if ( is_compiled(file, compiled) ):
-		print '(INCLUDE ALREADY COMPILED)'
+		#print '(INCLUDE ALREADY COMPILED)'
 		return compiled
 	
 	print '(INCLUDE NOT compiled yet, therefore COMPILING)'
 	
-	os.system('"python.exe simple_preprocessor.py -TW '+file+' '+compiled+'  2>&1"')
+	os.system('"python.exe simple_preprocessor.py -TW '+file+' '+compiled+' whateverDNMfilterByoutputfunction 2>&1"')
 	
 	print_test( 'INCLUDING THIS FILE(' + compiled + ')' )
 	return compiled # run pre_processor on it, with file being the source and  it as the dest
@@ -137,8 +137,8 @@ def print_wwwlog(s, literal = True):    # prints to brower's console log
 	#if (not esc_sequences_already):     # to get close to wysiwyg --   and perhaps innovative, Unicode tags proposed
 	#	s = 'Lee: ' + s.encode('ascii')  # just to write lines, used during programming, statement can be removed
                                          # the way print_wwwlog() works is that it will either print ascii messages to the console or, you can escape characters, 
-										 # that will give you the same result, that will have to be interpreted anyway at the web browser as unicode,
-										 # perhaps put <unicode></unicode> and or <utf-8></utf-8> tags (and their uppercase forms) that I have arbitrarily innovated around utf-8 strings to identify that.
+                                         # that will give you the same result, that will have to be interpreted anyway at the web browser as unicode,
+                                         # perhaps put <unicode></unicode> and or <utf8></utf8> tags (and their uppercase forms) that I have arbitrarily innovated around utf8 strings to identify that.
 		s = s.encode('hex')              # though perhaps browser's would identify that, or not, otherwise comment tags could be put around the unicode tags just mentioned <-- --> and javscript would convert to the required unicode text characters
 		s = '<hex>'+s+'</hex>'           # if newlines actually needed, then there's use of html tags, e.g., <br> and so on... (perhaps even arbitrary tags for things like tabs <tabs> defined by css and so on...)
 		
@@ -170,8 +170,13 @@ def php(code): # shell execute PHP from Python (that is being called from php5_m
 
 def top_content():
     
-	print_wwwlog( r"""I am at " the top " content""")
-	
+	print_wwwlog(r'''I am at " the top " content''' ) # NOTE: better to use triple single quotes , best to put a space before and after a triple quoted string (though not necessary for triple SINGLE quotes)
+	                                                  # (the open and close quick tags (< % % > with no spaces) to denote a 
+                                                      # triple double quoted string ONLY for return and assignment statements at this time) 
+                                                      # due to a space needed before closing parenthesis 
+                                                      # when using triple DOUBLE quotes (no restriction with triple SINGLE quotes by you, the programmer)
+	# at this time, one or no spaces between open parenthesis and open quick tag (no resriction on the close python quick tag as far as spaces around it)
+	print_wwwlog ( utags(training_wheels_bit_slower_to_remove(r""" example of new feature using quick tags between parenthesis """)) )
 	return 'header'
 	
 def mid_content():
@@ -191,11 +196,11 @@ hello world  (but html characters are not interpreted this way)
 	return utags(training_wheels_bit_slower_to_remove(r"""
 	
 This is a test, <br>it is actually within a triple double quoted string
-
-"""))
+{**{testing}**}
+""")).format( testing = 'HELLO WORLD(testing)' )
 	
 def end_content():
-	return '<unicode>footer</unicode>'
+	return 'footer'
 	
 # in the case not transferring data from php using multiple domains, simply revert to a previous version, commit 
 def domain_name(s):   
@@ -277,7 +282,10 @@ PHP test: {**{php_test}**}
 <unicode>hello world</unicode>
 
 
-""").format (  
+
+	
+
+""")).format (   #  %:)> # the arbitrary find string is exactly this 20 characters long, quick workaround to subtract a parenthesis keyword operator # happy face keyword to rid a frown ( removes a close parenthesis ) (an arbitrary keyword created to remove one text character)
 	# variables used
 	top_content = top_content(),
 	mid_content = mid_content(),
@@ -289,11 +297,19 @@ PHP test: {**{php_test}**}
 
 testing_output = this_is_a_test()    # test of include file using quick tags python syntax
 
-)).unicode_markup()  # place the keyword False in between .unicode_markup() parenthesis to remove the unicode type python quick tags, 
-                     # i.e., to drop the <unicode> and </unicode> tags but not the contents,text between the tags
-                     # by giving the method unicode_markup() the argument of False it will remove the unicode tags
-                     # (by removing the argument or by setting it to True that is the same thing) the unicode tags remain intact.
+) # %"""))                                              
 
+# statements on line #286 and #298 uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
+#.unicode_markup()	# this is the method to remove the unicode type python quick tags, and give it a False argument
+					# the utags wrapper already is automatically created
+					# Usage:
+					# place the keyword False in between .unicode_markup() parenthesis to remove the unicode type python quick tags,
+					# i.e., to drop the <unicode> and </unicode> tags but not the contents,text between the tags
+					# by giving the method unicode_markup() the argument of False it will remove the unicode tags
+					# (by removing the argument or by setting it to True that is the same thing) the unicode tags remain intact.
+					# (See front_compiled.py in github commit #47 of this project that I specially modified to show a working usage example)
+					# Otherwise, modify this latest version according to usage description
+					
 	# testing writing print statement to the web browser 
 	# the intent is to create a python function to wrap the writing with print statements to the web browser's console
 	code_init = utags(training_wheels_bit_slower_to_remove(r"""
@@ -350,13 +366,15 @@ if __name__ == "__main__":  # in the case not transferring data from php, then s
 	create_superglobals(sys.argv)
 	print_args(sys.argv, '<br>HERE front.py '+'<br>')
 	
-	if( not len(sys.argv) >= 3 ):
+	if( not len(sys.argv) >= 2 ):
 		print "argument is required, which domain name from the initial, starting PHP"
-		print "argument required, same file format bool"
 		sys.exit(1)
 		
-	output(sys.argv[1])
+	output(name=sys.argv[1])
 
+
+	
+	
 #   https://sarfraznawaz.wordpress.com/2012/01/05/outputting-php-to-browser-console/
 #   http://stackoverflow.com/questions/843277/how-do-i-check-if-a-variable-exists-in-python same as
 #   to test variable existence http://stackoverflow.com/a/843293  otherwise .ini for initial options

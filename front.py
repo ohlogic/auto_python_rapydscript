@@ -175,6 +175,8 @@ def top_content():
                                                       # triple double quoted string ONLY for return and assignment statements at this time) 
                                                       # due to a space needed before closing parenthesis 
                                                       # when using triple DOUBLE quotes (no restriction with triple SINGLE quotes by you, the programmer)
+	# at this time, one or no spaces between open parenthesis and open quick tag (no resriction on the close python quick tag as far as spaces around it)
+	print_wwwlog ( <% example of new feature using quick tags between parenthesis %> )
 	return 'header'
 	
 def mid_content():

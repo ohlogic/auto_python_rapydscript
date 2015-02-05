@@ -11,7 +11,14 @@ def algorithm(s, tw, uni_val=str(True) ):
 	if (tw):
 	
 		s = s.replace('return <%', 'return utags(training_wheels_bit_slower_to_remove(r"""')
-		s = s.replace('= <%', '= utags(training_wheels_bit_slower_to_remove(r"""')		
+		s = s.replace('= <%', '= utags(training_wheels_bit_slower_to_remove(r"""')
+		
+		#just added
+		s = s.replace('( <%', '( utags(training_wheels_bit_slower_to_remove(r"""' ) # specifically for print_wwwlog though turned off print literal feature for now
+		# and if smushed
+		s = s.replace('(<%', '( utags(training_wheels_bit_slower_to_remove(r"""' )
+		
+		
 		s = s.replace('<%', 'print utags(training_wheels_bit_slower_to_remove(r"""')
 #		s = s.replace('%%>', ')'+uni_str )                                    # to remove quick workaround, remove this line
 		s = s.replace('%>','"""))')

@@ -2,7 +2,7 @@
 # 
 # therefore, front_compiled.py (or whatever its name is given
 # by php ( or perhaps for include files also by python)
-
+# flimsy at this time
 import sys
 
 def print_array(s):
@@ -27,6 +27,12 @@ def process(lines):
 	for line in lines:
 		#s = line.split()      # or line.lstrip()  same thing    then  s[0]
 		func = 'print_wwwlog'
+		
+		# the idea is     if ( '<%' in line and '%>' in line  )   # due to it already being converted to triple double quoted a raw string literal string
+		# but because pre_processor.py runs first, therefore its the following:
+		if ( '( utags(training_wheels_bit_slower_to_remove(r"""' in line and '""")' in line ):		# therefore, presuming that quick tags are being used
+			out += line                             # therefore, not automatically adding r, already done
+			continue
 		
 		if ( line.lstrip().startswith(func) ):  	#  .startswith(func)     same as      [:len(func)] == func    works 
 			s   = line.find("'")
