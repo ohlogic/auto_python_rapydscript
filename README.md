@@ -41,7 +41,7 @@ The RapydScript simple example provided displays its output
 through the browser's console log, Firebug's console log, etc.
 
 2015-01-05
-Small edit to display a canvas tag using Python like Rapydscript (via Javascript) (note double canvas tags to be resolved next update)
+Small edit to display a canvas tag using Python like Rapydscript (via Javascript)
 
 2015-02-03
 Added a way to optionally show unicode type python quick tags with a boolean from index.php to display source code with or without unicode type python quick tags.  

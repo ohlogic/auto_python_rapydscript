@@ -70,7 +70,7 @@ def compile_include_quick_tags(file):
 		compiled = file
 	
 	if ( is_compiled(file, compiled) ):
-		print '(INCLUDE ALREADY COMPILED)'
+		#print '(INCLUDE ALREADY COMPILED)'
 		return compiled
 	
 	print '(INCLUDE NOT compiled yet, therefore COMPILING)'

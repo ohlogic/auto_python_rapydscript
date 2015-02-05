@@ -20,7 +20,7 @@ $str_bool_uni_value = 'False';
 // Though the idea if needed is to eventually transfer data to the python code, if only a few arguments
 // simply through a list of parameter/arguments, with more, then to use json via a php array encode and send that
 
-echo domain_name_endswith() . '<br>'; // goes to py code
+//echo domain_name_endswith() . '<br>'; // goes to py code
 
 function domain_name_endswith() {	  // or contains, domain_suffix, etc.    // or just argument to py code
 
@@ -95,7 +95,7 @@ else {
 					  'python "'.$compiled .'" "' .domain_name_endswith().'"  2>&1 ');
 	}
 	else {
-		echo '(ALREADY COMPILED)';
+		//echo '(ALREADY COMPILED)';
 		echo passthru('python "'.$compiled. '" "' .domain_name_endswith().'"  2>&1 ');
 	}
 }
@@ -134,7 +134,7 @@ function compile($source, $compiled = 'default_same_name_as_source') {
 		$compiled = $compiled . '.js';
 	
 	if ( is_compiled ($source, $compiled) ) {
-		echo 'compiled, yes, already done.';
+		//echo 'compiled, yes, already done.';
 		return;
 	}
 	
