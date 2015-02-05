@@ -26,7 +26,9 @@ node.exe   (to compile rapydscript)
 python.exe (to use a python script for server side web page creation, 
 			optional perhaps but nice to have python server side 
 			and (python like) client side with rapydscript)
-
+php.exe    (to initialize the page, for its superglobal variable access 
+            due to its maturity access, for now)
+			
 RapydScript note:
 
 *.pyj files are edited by the user.
@@ -42,6 +44,7 @@ through the browser's console log, Firebug's console log, etc.
 
 2015-01-05
 Small edit to display a canvas tag using Python like Rapydscript (via Javascript).
+
 In another update to source, added feature to allow python quick tags between parentheses, this is in addition to
 quick tags (being <% %> triple quoted strings) are allowed to be used to an assignment operator to a variable, and
 can be used to print out to the web page (see simple_preprocessor.py for details).
