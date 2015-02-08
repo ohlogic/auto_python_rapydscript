@@ -48,7 +48,7 @@ def algorithm(s, tw, uni_val=str(True) ):
 		
 		
 #		s = s.replace('""")).format (     %:)>', '""").format (   #  %:)> ')  # to remove quick workaround, remove this line, way to rid one close parenthesis, with the happy face keyword created for this purpose , it comments out the keyword %:)> 
-		# statements on line #16 and #20 uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
+		# statements on line #46 and #50 uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
 	else:
 		s = s.replace('return <%', 'return utags(r"""')
 		s = s.replace('= <%', '= utags(r"""')		
