@@ -1,9 +1,30 @@
 import sys
+import re
 
 def print_args(s):
 	for item in s:
 		print 'ARG:(' + item + ')'
 
+def findindices_of_nonwhitespace(s): # string  , returns tuple  (index and item) , this function not used for now
+                                     # split function  enhanced to also return the indices of each item 
+	arr = s.split()
+	t=[]
+	for item in arr:
+		i=0
+		i = s.find(item, i)
+		t.append((i,item))
+	return t		
+
+def adjacent(itemA, itemB, new, s): # skips whitespace  # regrettably had to resort to this regex, required, therefore this function
+	
+	# something like this should be possible (using itemA and itemB)
+	restr = itemA + r'\s{0,}' + itemB  # not using this string because,
+	# due to the operation of regex and its variability it's due to escaping of characters and other reasons
+	
+	# therefore:
+	return re.sub(r'\(\s{0,}<%', new, s)  # 0 to many spaces in between the ( and <%     #note: i had to escape the open parenthesis in this regex search
+	
+	
 def algorithm(s, tw, uni_val=str(True) ):
 	
 	uni_str = '.unicode_markup('+uni_val+')'
@@ -14,10 +35,12 @@ def algorithm(s, tw, uni_val=str(True) ):
 		s = s.replace('= <%', '= utags(training_wheels_bit_slower_to_remove(r"""')
 		
 		#just added
-		s = s.replace('( <%', '( utags(training_wheels_bit_slower_to_remove(r"""' ) # specifically for print_wwwlog though turned off print literal feature for now
+		#s = s.replace('( <%', '( utags(training_wheels_bit_slower_to_remove(r"""' ) # specifically for print_wwwlog though turned off print literal feature for now
 		# and if smushed
-		s = s.replace('(<%', '( utags(training_wheels_bit_slower_to_remove(r"""' )
+		#s = s.replace('(<%', '( utags(training_wheels_bit_slower_to_remove(r"""' )
 		
+		# updated the two previous statements with the following improved statement encompassing all cases (of the indented purpose) # 2015.02.07
+		s = adjacent('(', '<%', '( utags(training_wheels_bit_slower_to_remove(r"""', s)
 		
 		s = s.replace('<%', 'print utags(training_wheels_bit_slower_to_remove(r"""')
 #		s = s.replace('%%>', ')'+uni_str )                                    # to remove quick workaround, remove this line
