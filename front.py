@@ -285,7 +285,7 @@ PHP test: {**{php_test}**}
 
 	
 
-%>.format (   #  %:)> # the arbitrary find string is exactly this 20 characters long, quick workaround to subtract a parenthesis keyword operator # happy face keyword to rid a frown ( removes a close parenthesis ) (an arbitrary keyword created to remove one text character)
+%>.format (   #  %:)>    # UNCOMMENT POINT *A* (uncomment the FIRST comment hash tag for the remove unicode operation   # the arbitrary find string is exactly this 20 characters long, quick workaround to subtract a parenthesis keyword operator # happy face keyword to rid a frown ( removes a close parenthesis ) (an arbitrary keyword created to remove one text character)
 	# variables used
 	top_content = top_content(),
 	mid_content = mid_content(),
@@ -297,9 +297,9 @@ PHP test: {**{php_test}**}
 
 testing_output = this_is_a_test()    # test of include file using quick tags python syntax
 
-) # %%>                                              
+) # %%>    # UNCOMMENT POINT *B* (uncomment the FIRST comment hash tag for the remove unicode operation)                                           
 
-# statements on line #286 and #298 uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
+# statements marked by UNCOMMENT POINT *A* and *B* uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
 #.unicode_markup()	# this is the method to remove the unicode type python quick tags, and give it a False argument
 					# the utags wrapper already is automatically created
 					# Usage:

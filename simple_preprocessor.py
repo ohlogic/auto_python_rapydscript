@@ -43,12 +43,15 @@ def algorithm(s, tw, uni_val=str(True) ):
 		s = adjacent('(', '<%', '( utags(training_wheels_bit_slower_to_remove(r"""', s)
 		
 		s = s.replace('<%', 'print utags(training_wheels_bit_slower_to_remove(r"""')
-#		s = s.replace('%%>', ')'+uni_str )                                    # to remove quick workaround, remove this line
+#		s = s.replace('%%>', ')'+uni_str )    # UNCOMMENT POINT *C* (uncomment the FIRST comment hash tag for the remove unicode operation)      # to remove quick workaround, remove this line
 		s = s.replace('%>','"""))')
 		
 		
-#		s = s.replace('""")).format (     %:)>', '""").format (   #  %:)> ')  # to remove quick workaround, remove this line, way to rid one close parenthesis, with the happy face keyword created for this purpose , it comments out the keyword %:)> 
-		# statements on line #46 and #50 uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
+#		s = s.replace('""")).format (     %:)>', '""").format (   #  %:)> ')    # UNCOMMENT POINT *D* (uncomment the FIRST comment hash tag for the remove unicode operation)     
+		# about the previous line,  to remove quick workaround, remove this line, way to rid one close parenthesis, with the happy face keyword created for this purpose , it comments out the keyword %:)> 
+
+		# statements marked by UNCOMMENT POINT *C* and *D* uncomment to remove unicode type quick python tags
+		# uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
 	else:
 		s = s.replace('return <%', 'return utags(r"""')
 		s = s.replace('= <%', '= utags(r"""')		
