@@ -43,6 +43,11 @@ Also note:
 The RapydScript simple example provided displays its output 
 through the browser's console log, Firebug's console log, etc.
 
+2015-02-08
+Added a feature by removing the trailing backslash issue in Python string implementation in two ways so as to simply 
+run without this issue by automatically dealing with it in an optional manner (see simple_preprocessor.py for details).
+This improves python quick tags <% %> triple double quoted strings to be more wysiwyg, that is the intent.
+
 2015-01-05
 Small edit to display a canvas tag using Python like Rapydscript (via Javascript).
 

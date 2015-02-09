@@ -1,10 +1,56 @@
 import sys
 import re
 
+option_auto_trailing_backslash_doubleit = True  # when True,  resolves by converting trailing \ to \\     (alternative method is setting to False)
+                                                # when False, resolves by adding a space to end of python quick tag string to auto resolve python not allowing trailing backslash in triple quoted string
+                                                # either is ok, works
 def print_args(s):
 	for item in s:
 		print 'ARG:(' + item + ')'
+		
+def print_tuple(u):
+	for item in u:	
+		#print item                              # this will print  the raw string literal version of it (newlines shown as \n literally text displayed in command line text)
+		print str( item[0] ) + ' ' + item[1]     # this      prints the escaped version of it (e.g., newlines wrap)
+ 
+def makes_tuple_find(s, item, previous_text_character_length=0):
+	idx=0
+	t=[]
+	while(1):
+		i = s.find(item,idx)
+		
+		if (i== -1):
+			break
+		
+		if (i == 0): # in the case of /%>    i then is 0
+			t.append( ( i, 'FALSE_START' + s[0:i+len(item)] ) )
+		else:
+			t.append( ( i , s[i-previous_text_character_length:i+len(item)] ) )
+		idx = i+1
+	return t
 
+def reverse_tuple_list(t):
+	v=[]
+	l = len(t)
+	idx = l
+	print 'index is:' + str(idx)
+	for x in range(l):
+		v.append( ( t[idx-1][0] , t[idx-1][1] ) )
+		idx = idx - 1
+	return v
+
+def auto_backslash_escape_adjacent_to_python_quicktag(s, array_of_tuples_in_reverse_order , thing): # adjacent to the closing python quicktag   %>
+	t = s+' '  # just an exercise to not modify the original,  otherwise  s works too
+	t = t[:-1] # to create a new string , otherwise perhaps     t = s[:]  e.g., http://www.python-course.eu/deep_copy.php
+	for i in array_of_tuples_in_reverse_order:
+
+		if i[1] == thing: #ok, that the required result
+			print 'yes'                                     # then an edit to the source code will only occur when a count > 0
+		else:
+			t = t[: i[0]+1  ] + '\\' + t[  i[0]+1  :]
+	
+	return t
+	
 def findindices_of_nonwhitespace(s): # string  , returns tuple  (index and item) , this function not used for now
                                      # split function  enhanced to also return the indices of each item 
 	arr = s.split()
@@ -27,10 +73,12 @@ def adjacent(itemA, itemB, new, s): # skips whitespace  # regrettably had to res
 	
 def algorithm(s, tw, uni_val=str(True) ):
 	
+	global option_auto_trailing_backslash_doubleit # when set to False adds space to resolve trailing backslash issue
+	
 	uni_str = '.unicode_markup('+uni_val+')'
 	
 	if (tw):
-	
+
 		s = s.replace('return <%', 'return utags(training_wheels_bit_slower_to_remove(r"""')
 		s = s.replace('= <%', '= utags(training_wheels_bit_slower_to_remove(r"""')
 		
@@ -44,9 +92,12 @@ def algorithm(s, tw, uni_val=str(True) ):
 		
 		s = s.replace('<%', 'print utags(training_wheels_bit_slower_to_remove(r"""')
 #		s = s.replace('%%>', ')'+uni_str )    # UNCOMMENT POINT *C* (uncomment the FIRST comment hash tag for the remove unicode operation)      # to remove quick workaround, remove this line
-		s = s.replace('%>','"""))')
 		
-		
+		if(option_auto_trailing_backslash_doubleit): # an alternative to the algorithm2 solution that (resolves it by adding a trailing backslash) is 
+			s = s.replace('%>','"""))')              # to simply add a space to the end of the string at this exact point of the code (that modifies the compiled code only) that somewhat resolves the trailing backslash issue in python triple double quotes 2015.02.08
+		else:
+			s = s.replace('%>',' """))')     # adds a space 
+
 #		s = s.replace('""")).format (     %:)>', '""").format (   #  %:)> ')    # UNCOMMENT POINT *D* (uncomment the FIRST comment hash tag for the remove unicode operation)     
 		# about the previous line,  to remove quick workaround, remove this line, way to rid one close parenthesis, with the happy face keyword created for this purpose , it comments out the keyword %:)> 
 
@@ -58,11 +109,27 @@ def algorithm(s, tw, uni_val=str(True) ):
 		s = s.replace('<%', 'print utags(r"""' ).replace('%>', '""")')		
 	return s
 
+def algorithm2(s):
+										 # added: 2015.02.08 (feature to auto escape backslash for trailing raw literal triple double quotes to make it a valid python string)
+	item1 = r'\\%>'                      # must be raw string literal
+	arr1  = makes_tuple_find(s, item1 )
+	item2 = '\%>'
+	arr2  = makes_tuple_find(s, item2, 1)
+	arr3  = reverse_tuple_list(arr2)     # to add a slash, from end to front so indices consistent
+	s     = auto_backslash_escape_adjacent_to_python_quicktag(s, arr3, item1)
+	return s 
+	
 def modify_it(file, TW=False):
+	
+	global option_auto_trailing_backslash_doubleit
+
 	with open(file, "r+") as fp:
 		s = fp.read()
 		fp.seek(0)
 		
+	if (option_auto_trailing_backslash_doubleit): # by converting trailing \ to \\   Otherwise alternative method to add space, i.e., set this variable to False at the top
+		s = algorithm2(s)		
+
 		if (TW):
 			fp.write( algorithm(s,TW) )
 		else:
@@ -70,9 +137,15 @@ def modify_it(file, TW=False):
 		fp.truncate() # unnecessary, except when it is
 
 def modify_diff(source, TW=False, dest='', uni_val=''):
+
+	global option_auto_trailing_backslash_doubleit
+
 	with open(source, 'r') as rp:
 		s = rp.read()
 	
+	if (option_auto_trailing_backslash_doubleit): # by converting trailing \ to \\   Otherwise alternative method to add space, i.e., set this variable to False at the top
+		s = algorithm2(s)
+
 	with open(dest, 'w') as wp:
 		if (TW):
 			wp.write( algorithm(s,TW, uni_val) )
