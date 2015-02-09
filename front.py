@@ -281,9 +281,11 @@ PHP test: {**{php_test}**}
 
 <unicode>hello world</unicode>
 
+<pre>
 
+{**{source_variable}**}
 
-	
+</pre>
 
 %>.format (   #  %:)>    # UNCOMMENT POINT *A* (uncomment the FIRST comment hash tag for the remove unicode operation   # the arbitrary find string is exactly this 20 characters long, quick workaround to subtract a parenthesis keyword operator # happy face keyword to rid a frown ( removes a close parenthesis ) (an arbitrary keyword created to remove one text character)
 	# variables used
@@ -295,7 +297,10 @@ PHP test: {**{php_test}**}
 	domain      = domain_name(name), # or something like whether a mobile device,
                                      # resolution information, etc. to select which css that fits	
 
-testing_output = this_is_a_test()    # test of include file using quick tags python syntax
+testing_output = this_is_a_test(),    # test of include file using quick tags python syntax
+
+
+source_variable = source_code_output()
 
 ) # %%>    # UNCOMMENT POINT *B* (uncomment the FIRST comment hash tag for the remove unicode operation)                                           
 

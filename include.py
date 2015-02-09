@@ -8,7 +8,70 @@ This is intented to be included as text, and returned as a string
 <!-- escape characters within include files -->
 
 %>
-		
+def python_using_php_htmlentities(s):
+
+	# unsure, put to file to check, echo later
+	# unsure, put echo in front of htmlentities
+	
+	#list = ['\a', '\1', '\2', '\3', '\4', '\5', '\6', '\7']
+	#for item in list:
+	#	s = s.replace(item, '\\'+item)
+	
+	s = s + r'\a\1\2\3\4\5\6\7\8\9\b\f\v\r\n\t\0\x0B'
+	
+	code_init = r""" echo htmlentities('%s'); """ %  s.replace("'", "\\'")  # quotes mess up format string variables, got to give it a raw string literal
+																		# especially that first double quote
+																
+	#to_write("checking_html_entities_output_php_from_python_help.txt", php (code_init) ) #works! # remove this line, just to check output to file is also wysiwyg
+	
+	#the only thing to fix is a triple double quote within the string !!! (and the raw string limited escaping too)
+
+	width_here = 200
+	height_here = 200	
+	code_here = utags(training_wheels_bit_slower_to_remove(r"""
+echo ('   """ + str(width_here) + """, """ + str(height_here) + """  ');
+"""))
+
+	# returning output from php              return  php ( code_init )          to fix !  
+	# + php ( code_here )
+	
+	
+	
+	
+	return 'now at the point I want<br>' + s + php (code_init)
+	
+
+	
+def source_code():
+
+	#pre_pre_processor.py to address """ """ between quick tags and other small things of a raw string literal
+	
+	return <%
+
+	'how about this nice person you'
+
+
+	<br>
+	hello world, this is the source code included file
+	<unicode></unicode>
+	
+	<p> </p>
+
+%>
+
+
+
+# todo:   python_using_php_htmlentities
+
+def source_code_output(): # good at this point, it return a string
+	return <%
+	
+
+{**{source_code_htmlentities_form}**}
+	
+
+%>.format( source_code_htmlentities_form = python_using_php_htmlentities( source_code() ) )
+	
 def console_log_function():
 	return <%
 	

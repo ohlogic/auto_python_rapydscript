@@ -281,11 +281,13 @@ PHP test: {**{php_test}**}
 
 <unicode>hello world</unicode>
 
+<pre>
 
+{**{source_variable}**}
 
-	
+</pre>
 
-""")).format (   #  %:)> # the arbitrary find string is exactly this 20 characters long, quick workaround to subtract a parenthesis keyword operator # happy face keyword to rid a frown ( removes a close parenthesis ) (an arbitrary keyword created to remove one text character)
+""")).format (   #  %:)>    # UNCOMMENT POINT *A* (uncomment the FIRST comment hash tag for the remove unicode operation   # the arbitrary find string is exactly this 20 characters long, quick workaround to subtract a parenthesis keyword operator # happy face keyword to rid a frown ( removes a close parenthesis ) (an arbitrary keyword created to remove one text character)
 	# variables used
 	top_content = top_content(),
 	mid_content = mid_content(),
@@ -295,11 +297,14 @@ PHP test: {**{php_test}**}
 	domain      = domain_name(name), # or something like whether a mobile device,
                                      # resolution information, etc. to select which css that fits	
 
-testing_output = this_is_a_test()    # test of include file using quick tags python syntax
+testing_output = this_is_a_test(),    # test of include file using quick tags python syntax
 
-) # %"""))                                              
 
-# statements on line #286 and #298 uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
+source_variable = source_code_output()
+
+) # %"""))    # UNCOMMENT POINT *B* (uncomment the FIRST comment hash tag for the remove unicode operation)                                           
+
+# statements marked by UNCOMMENT POINT *A* and *B* uncomment to remove unicode type quick python tags i.e., <unicode> </unicode>  though the contents in between the tags remain intact
 #.unicode_markup()	# this is the method to remove the unicode type python quick tags, and give it a False argument
 					# the utags wrapper already is automatically created
 					# Usage:

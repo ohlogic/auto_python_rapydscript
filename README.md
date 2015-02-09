@@ -43,6 +43,10 @@ Also note:
 The RapydScript simple example provided displays its output 
 through the browser's console log, Firebug's console log, etc.
 
+2015-02-09
+Added the feature to be able to display source code on a webpage without escaping text by utilizing the principle of
+re-use by running mature PHP functions from Python to htmlentities the source code for display purposes.
+
 2015-02-08
 Added a feature by removing the trailing backslash issue in Python string implementation in two ways so as to simply 
 run without this issue by automatically dealing with it in an optional manner (see simple_preprocessor.py for details).
