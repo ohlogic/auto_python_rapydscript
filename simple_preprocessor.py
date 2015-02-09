@@ -4,6 +4,8 @@ import re
 option_auto_trailing_backslash_doubleit = True  # when True,  resolves by converting trailing \ to \\     (alternative method is setting to False)
                                                 # when False, resolves by adding a space to end of python quick tag string to auto resolve python not allowing trailing backslash in triple quoted string
                                                 # either is ok, works
+python_quick_tags_tdq_wrap_double_tags  = False # recommended, when False then triple double quotes (tdq) between python quick tags are converted:         """  to        <double>""<double>"
+                                                # when True, a bit more structured(strict), then tdq between python quick tags are converted: """  to   <tdq><double>""<double>"</tdq>
 def print_args(s):
 	for item in s:
 		print 'ARG:(' + item + ')'
@@ -11,8 +13,13 @@ def print_args(s):
 def print_tuple(u):
 	for item in u:	
 		#print item                              # this will print  the raw string literal version of it (newlines shown as \n literally text displayed in command line text)
-		print str( item[0] ) + ' ' + item[1]     # this      prints the escaped version of it (e.g., newlines wrap)
- 
+		print str( item[0] ) + ' ' + item[1] + '<br>'    # this      prints the escaped version of it (e.g., newlines wrap)
+
+def print_tuple_4i(u):
+	for item in u:	
+		#print item                              # this will print  the raw string literal version of it (newlines shown as \n literally text displayed in command line text)
+		print str( item[0] ) + ' ' + item[1] + ' ' + item[2] + ' ' + str( item[3] )
+
 def makes_tuple_find(s, item, previous_text_character_length=0):
 	idx=0
 	t=[]
@@ -28,7 +35,7 @@ def makes_tuple_find(s, item, previous_text_character_length=0):
 			t.append( ( i , s[i-previous_text_character_length:i+len(item)] ) )
 		idx = i+1
 	return t
-
+	
 def reverse_tuple_list(t):
 	v=[]
 	l = len(t)
@@ -38,7 +45,30 @@ def reverse_tuple_list(t):
 		v.append( ( t[idx-1][0] , t[idx-1][1] ) )
 		idx = idx - 1
 	return v
+	
+def make_quad_tuple_find_between_tags_reverse_order(s, opentag = '<%', closetag = '%>'):
+	
+	arr = makes_tuple_find(s, opentag)
+	
+	print_tuple(arr)
+	
+	arr2 = reverse_tuple_list(arr)
 
+	tup = []
+	for item in arr2:
+		
+		tmp = item[1]
+		idx = item[0]
+		res = s.find(closetag, idx) # can do idx+2 to be exact
+
+		if res == -1:
+			print 'early exit, cannot find closing python quick tag'
+			sys.exit(1)
+			
+		tup.append( ( item[0], item[1], '%>', res ) )
+	return tup		
+
+	
 def auto_backslash_escape_adjacent_to_python_quicktag(s, array_of_tuples_in_reverse_order , thing): # adjacent to the closing python quicktag   %>
 	t = s+' '  # just an exercise to not modify the original,  otherwise  s works too
 	t = t[:-1] # to create a new string , otherwise perhaps     t = s[:]  e.g., http://www.python-course.eu/deep_copy.php
@@ -118,7 +148,34 @@ def algorithm2(s):
 	arr3  = reverse_tuple_list(arr2)     # to add a slash, from end to front so indices consistent
 	s     = auto_backslash_escape_adjacent_to_python_quicktag(s, arr3, item1)
 	return s 
+
+def algorithm_to_allow_tdq_within_quick_tags(s): # to allow triple double quotes within quick tags <% %>
 	
+	global python_quick_tags_tdq_wrap_double_tags
+	
+                                                 # can now make it a find_txt, replace_txt, opentag, closetag function
+	tup = make_quad_tuple_find_between_tags_reverse_order(s)
+
+	for i in tup:
+	
+		if (python_quick_tags_tdq_wrap_double_tags):
+			s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;') + s[i[3]:]
+		else:
+			s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') + s[i[3]:]
+		
+	return s
+
+# the algorithm created by Stan "Lee" Switaj
+def algorithm_to_allow_tdq_within_quick_tags_final_done(s, opentag, closetag, old, new ): # instead of regex, perhaps not going to be used
+
+	tup = make_quad_tuple_find_between_tags_reverse_order(s, opentag, closetag)
+
+	for i in tup:
+		s = s[:i[0]] + s[i[0]:i[3]].replace(old, new) + s[i[3]:]
+		
+	return s
+
+
 def modify_it(file, TW=False):
 	
 	global option_auto_trailing_backslash_doubleit
@@ -139,13 +196,25 @@ def modify_it(file, TW=False):
 def modify_diff(source, TW=False, dest='', uni_val=''):
 
 	global option_auto_trailing_backslash_doubleit
-
+	
+	global python_quick_tags_tdq_wrap_double_tags
+	
 	with open(source, 'r') as rp:
 		s = rp.read()
 	
 	if (option_auto_trailing_backslash_doubleit): # by converting trailing \ to \\   Otherwise alternative method to add space, i.e., set this variable to False at the top
 		s = algorithm2(s)
+	
+	
+	#s = algorithm_to_allow_tdq_within_quick_tags(s)
+	
+	
+	s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&quot;&quot;&quot;') # instead of regex
 
+	
+	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') # instead of regex, wraps with what I was going to use a <double></double> tag result though is  <double>""</double>"  Note trailing double quote though
+	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;') # instead of regex, to wrap the content with additional <tdq></tdq> tag  to better wrap, result is:  <tdq><double>""</double>"</tdq>
+	
 	with open(dest, 'w') as wp:
 		if (TW):
 			wp.write( algorithm(s,TW, uni_val) )

@@ -35,10 +35,14 @@ echo ('   """ + str(width_here) + """, """ + str(height_here) + """  ');
 	# returning output from php              return  php ( code_init )          to fix !  
 	# + php ( code_here )
 	
+	#var = php(code_init)  # not using at this version, but works!!! 
 	
+	# not using the following two lines at this time
+	#var = var.replace("&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;", '<tdq><double>""</double>"</tdq>')
+	#var = var.replace("&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;" , '<double>""</double>"')
 	
-	
-	return 'now at the point I want<br>' + s + php (code_init)
+	return s
+	#return 'now at the point I want<br>' + s + var
 	
 
 	
@@ -49,7 +53,8 @@ def source_code():
 	return utags(training_wheels_bit_slower_to_remove(r"""
 
 	'how about this nice person you'
-
+ 
+&quot;&quot;&quot; hello world, within triple double quotes within python quick tags &quot;&quot;&quot;
 
 	<br>
 	hello world, this is the source code included file

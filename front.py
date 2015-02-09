@@ -142,10 +142,10 @@ def print_wwwlog(s, literal = True):    # prints to brower's console log
 		s = s.encode('hex')              # though perhaps browser's would identify that, or not, otherwise comment tags could be put around the unicode tags just mentioned <-- --> and javscript would convert to the required unicode text characters
 		s = '<hex>'+s+'</hex>'           # if newlines actually needed, then there's use of html tags, e.g., <br> and so on... (perhaps even arbitrary tags for things like tabs <tabs> defined by css and so on...)
 		
-	code_init = <%
+	code_init = r"""
 $name1 = '%s';
 logConsole('$name1 var', $name1, true);
-%> % s
+""" % s
 	wwwout = code_init + "\n" + console_log_function()
 	print php(  wwwout  ) # to web
 					  					  
@@ -216,9 +216,9 @@ def training_wheels_bit_slower_to_remove(s): # recommend: to remove this functio
 # test example, don't forget to have php.exe and php5ts.dll in PATH
 width = 100
 height = 100	
-code = <%
+code = r'''
 echo ('   """ + str(width) + """, """ + str(height) + """  ');
-%>
+'''
 
 # Note, any JavaScript or any other code that contains a curly brace 
 # must double the curly brace when using the python format function with the triple double-quoted string, 
