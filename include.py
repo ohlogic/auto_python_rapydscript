@@ -3,7 +3,7 @@ def this_is_a_test():
 
 	return <%
 
-This is intented to be included as text, and returned as a string
+This is intended to be included as text, and returned as a string
 \\a\\1\\2\\3\\4\\5\\6\\7\\8\\9\\b\\f\\v\\r\\n\\t\\0\\x0B   testing3, expected
 <!-- escape characters within include files -->
 
@@ -17,8 +17,8 @@ def python_using_php_htmlentities(s):
 	
 	s = s.replace('&quot;&quot;&quot;', '*QUOT-*-QUOT-*-QUOT*'+salt);
 	
-	code_init = r""" echo htmlentities('%s'); """ %  s.replace("'", "\\'")  # quotes cause problem to format string variables, give it a raw string literal
-																
+	code_init = <% echo htmlentities('%s'); %>  %  s.replace("'", "\\'")  # quotes cause problem to format string variables, give it a raw string literal
+															
 	width = 200
 	height = 200
 	
@@ -35,7 +35,7 @@ def python_using_php_htmlentities(s):
 	
 def source_code():
 
-	#pre_pre_processor.py to address """ """ between quick tags and other small things of a raw string literal
+	#simple_preprocessor.py to address """ """ between quick tags and other small things of a raw string literal
 	
 	return <%
 

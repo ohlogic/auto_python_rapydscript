@@ -17,8 +17,8 @@ def python_using_php_htmlentities(s):
 	
 	s = s.replace('&quot;&quot;&quot;', '*QUOT-*-QUOT-*-QUOT*'+salt);
 	
-	code_init = r""" echo htmlentities('%s'); """ %  s.replace("'", "\\'")  # quotes cause problem to format string variables, give it a raw string literal
-																
+	code_init = utags(training_wheels_bit_slower_to_remove(r""" echo htmlentities('%s'); """))  %  s.replace("'", "\\'")  # quotes cause problem to format string variables, give it a raw string literal
+															
 	width = 200
 	height = 200
 	
@@ -35,7 +35,7 @@ def python_using_php_htmlentities(s):
 	
 def source_code():
 
-	#pre_pre_processor.py to address """ """ between quick tags and other small things of a raw string literal
+	#simple_preprocessor.py to address """ """ between quick tags and other small things of a raw string literal
 	
 	return utags(training_wheels_bit_slower_to_remove(r"""
 
