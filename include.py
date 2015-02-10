@@ -8,48 +8,29 @@ This is intented to be included as text, and returned as a string
 <!-- escape characters within include files -->
 
 %>
+
 def python_using_php_htmlentities(s):
 
-	# unsure, put to file to check, echo later
-	# unsure, put echo in front of htmlentities
-	
-	#list = ['\a', '\1', '\2', '\3', '\4', '\5', '\6', '\7']
-	#for item in list:
-	#	s = s.replace(item, '\\'+item)
 	salt = uuid.uuid4().hex
 	
 	s = s + r'\a\1\2\3\4\5\6\7\8\9\b\f\v\r\n\t\0\x0B'
 	
 	s = s.replace('&quot;&quot;&quot;', '*QUOT-*-QUOT-*-QUOT*'+salt);
 	
-	code_init = r""" echo htmlentities('%s'); """ %  s.replace("'", "\\'")  # quotes mess up format string variables, got to give it a raw string literal
-																		# especially that first double quote
+	code_init = r""" echo htmlentities('%s'); """ %  s.replace("'", "\\'")  # quotes cause problem to format string variables, give it a raw string literal
 																
-	#to_write("checking_html_entities_output_php_from_python_help.txt", php (code_init) ) #works! # remove this line, just to check output to file is also wysiwyg
-	
-	#the only thing to fix is a triple double quote within the string !!! (and the raw string limited escaping too)
-
 	width = 200
 	height = 200
+	
 	code_here = <%
 	echo ('   {**{php_width}**}, {**{php_height}**}  ');
 	%>.format( php_width = str(width) , php_height = str(height) )
 
-	# returning output from php              return  php ( code_init )          to fix !  
-	# + php ( code_here )
+	var = php(code_init)
 	
-	var = php(code_init)  # not using at this version, but works!!! 
 	
-	# not using the following two lines at this time
-	#var = var.replace("&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;", '<tdq><double>""</double>"</tdq>')
-	#var = var.replace("&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;" , '<double>""</double>"')
-	
-	var = var.replace('*QUOT-*-QUOT-*-QUOT*'+salt, '&quot;&quot;&quot; (BACK CONVERTED)')
-	
+	var = var.replace('*QUOT-*-QUOT-*-QUOT*'+salt, '&quot;&quot;&quot;')
 	return var
-	#return s
-	#return 'now at the point I want<br>' + s + var
-	
 
 	
 def source_code():
@@ -71,10 +52,7 @@ def source_code():
 %>
 
 
-
-# todo:   python_using_php_htmlentities
-
-def source_code_output(): # good at this point, it return a string
+def source_code_output():
 	return <%
 	
 
