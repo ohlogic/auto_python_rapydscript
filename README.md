@@ -47,7 +47,8 @@ through the browser's console log, Firebug's console log, etc.
 Added the feature to be able to display source code on a webpage without escaping text by utilizing the principle of
 re-use by running mature PHP functions from Python to htmlentities the source code for display purposes.
 Added a feature to allow triple quotes between python quick tags <% %>.  
-Additional features to be added soon.
+With Python now running PHP functions, source code can be displayed 
+through Python calling PHP's htmlentities function in wysiwyg output.
 
 2015-02-08
 Added a feature by removing the trailing backslash issue in Python string implementation in two ways so as to simply 

@@ -3,6 +3,7 @@ import sys
 from subprocess import PIPE, Popen, STDOUT
 import time
 import ast
+import uuid
 
 same_file = False	# is True or False , gets value from PHP (global or make App class due to        # Note, 2015.02.02: same_file set to True not recommended
                         # global variables frowned upon, i.e., not best practices)                   # because of the note comment explained in index.php
@@ -142,10 +143,10 @@ def print_wwwlog(s, literal = True):    # prints to brower's console log
 		s = s.encode('hex')              # though perhaps browser's would identify that, or not, otherwise comment tags could be put around the unicode tags just mentioned <-- --> and javscript would convert to the required unicode text characters
 		s = '<hex>'+s+'</hex>'           # if newlines actually needed, then there's use of html tags, e.g., <br> and so on... (perhaps even arbitrary tags for things like tabs <tabs> defined by css and so on...)
 		
-	code_init = r"""
+	code_init = <%
 $name1 = '%s';
 logConsole('$name1 var', $name1, true);
-""" % s
+%> % s
 	wwwout = code_init + "\n" + console_log_function()
 	print php(  wwwout  ) # to web
 					  					  
@@ -215,10 +216,12 @@ def training_wheels_bit_slower_to_remove(s): # recommend: to remove this functio
 
 # test example, don't forget to have php.exe and php5ts.dll in PATH
 width = 100
-height = 100	
-code = r'''
-echo ('   """ + str(width) + """, """ + str(height) + """  ');
-'''
+height = 100
+code = <%
+
+echo ('   {**{php_width}**}, {**{php_height}**}  ');
+
+%>.format( php_width = str(width) , php_height = str(height) )
 
 # Note, any JavaScript or any other code that contains a curly brace 
 # must double the curly brace when using the python format function with the triple double-quoted string, 
@@ -354,7 +357,7 @@ logConsole('$user object', $user, true);
 	# (only for the previously stated purpose. So it's just to inspect and review the string by writing it to a file)
 	s = s.replace("#\\'#", "#'#").replace('#\\"\\"#', '#""#').replace("#\\'\\'#", "#''#") # comment this line out to view the exact string that gets OUTPUT to the web
 	
-	to_write('testit.txt', s ) # uses to determine problematic characters only, can be removed
+	#to_write('testit.txt', s ) # uses to determine problematic characters only, can be removed, and to verify the contents of a php string by outputing to a file
 	
 	# Sidenote: I did update the original regex and removed the \s to allow spaces and its noteworthy that it only needs one backslash to escape the string
 	# as well as extended the regex just for demonstration to cover the escape characters commonly used

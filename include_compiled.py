@@ -16,8 +16,11 @@ def python_using_php_htmlentities(s):
 	#list = ['\a', '\1', '\2', '\3', '\4', '\5', '\6', '\7']
 	#for item in list:
 	#	s = s.replace(item, '\\'+item)
+	salt = uuid.uuid4().hex
 	
 	s = s + r'\a\1\2\3\4\5\6\7\8\9\b\f\v\r\n\t\0\x0B'
+	
+	s = s.replace('&quot;&quot;&quot;', '*QUOT-*-QUOT-*-QUOT*'+salt);
 	
 	code_init = r""" echo htmlentities('%s'); """ %  s.replace("'", "\\'")  # quotes mess up format string variables, got to give it a raw string literal
 																		# especially that first double quote
@@ -26,22 +29,25 @@ def python_using_php_htmlentities(s):
 	
 	#the only thing to fix is a triple double quote within the string !!! (and the raw string limited escaping too)
 
-	width_here = 200
-	height_here = 200	
+	width = 200
+	height = 200
 	code_here = utags(training_wheels_bit_slower_to_remove(r"""
-echo ('   """ + str(width_here) + """, """ + str(height_here) + """  ');
-"""))
+	echo ('   {**{php_width}**}, {**{php_height}**}  ');
+	""")).format( php_width = str(width) , php_height = str(height) )
 
 	# returning output from php              return  php ( code_init )          to fix !  
 	# + php ( code_here )
 	
-	#var = php(code_init)  # not using at this version, but works!!! 
+	var = php(code_init)  # not using at this version, but works!!! 
 	
 	# not using the following two lines at this time
 	#var = var.replace("&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;", '<tdq><double>""</double>"</tdq>')
 	#var = var.replace("&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;" , '<double>""</double>"')
 	
-	return s
+	var = var.replace('*QUOT-*-QUOT-*-QUOT*'+salt, '&quot;&quot;&quot; (BACK CONVERTED)');	
+	
+	return var
+	#return s
 	#return 'now at the point I want<br>' + s + var
 	
 
