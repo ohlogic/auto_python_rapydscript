@@ -4,8 +4,6 @@ import re
 option_auto_trailing_backslash_doubleit = True  # when True,  resolves by converting trailing \ to \\     (alternative method is setting to False)
                                                 # when False, resolves by adding a space to end of python quick tag string to auto resolve python not allowing trailing backslash in triple quoted string
                                                 # either is ok, works
-#python_quick_tags_tdq_wrap_double_tags = False # recommended, when False then triple double quotes (tdq) between python quick tags are converted:         """  to        <double>""<double>"
-                                                # when True, a bit more structured(strict), then tdq between python quick tags are converted: """  to   <tdq><double>""<double>"</tdq>
 def print_args(s):
 	for item in s:
 		print 'ARG:(' + item + ')'
@@ -112,12 +110,7 @@ def algorithm(s, tw, uni_val=str(True) ):
 		s = s.replace('return <%', 'return utags(training_wheels_bit_slower_to_remove(r"""')
 		s = s.replace('= <%', '= utags(training_wheels_bit_slower_to_remove(r"""')
 		
-		#just added
-		#s = s.replace('( <%', '( utags(training_wheels_bit_slower_to_remove(r"""' ) # specifically for print_wwwlog though turned off print literal feature for now
-		# and if smushed
-		#s = s.replace('(<%', '( utags(training_wheels_bit_slower_to_remove(r"""' )
-		
-		# updated the two previous statements with the following improved statement encompassing all cases (of the intended purpose) # 2015.02.07
+        # note adjacent function for any number of spaces between ( and <%
 		s = adjacent('(', '<%', '( utags(training_wheels_bit_slower_to_remove(r"""', s)
 		
 		s = s.replace('<%', 'print utags(training_wheels_bit_slower_to_remove(r"""')
@@ -150,10 +143,7 @@ def algorithm2(s):
 	return s 
 
 def algorithm_to_allow_tdq_within_quick_tags(s, old='"""', new='&quot;&quot;&quot;'): # to allow triple double quotes within quick tags <% %>
-	
-	#global python_quick_tags_tdq_wrap_double_tags
-	
-                                                 # can now make it a find_txt, replace_txt, opentag, closetag function
+
 	tup = make_quad_tuple_find_between_tags_reverse_order(s)
 
 	for i in tup:
@@ -161,12 +151,7 @@ def algorithm_to_allow_tdq_within_quick_tags(s, old='"""', new='&quot;&quot;&quo
 		s = s[:i[0]] + s[i[0]:i[3]].replace(old, new) + s[i[3]:]
 		
 		#s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&quot;&quot;&quot;') + s[i[3]:]
-		
-		#if (python_quick_tags_tdq_wrap_double_tags):
-		#	s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;') + s[i[3]:]
-		#else:
-		#	s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') + s[i[3]:]
-		
+
 	return s
 
 # the algorithm created by Stan "Lee" Switaj
@@ -201,8 +186,6 @@ def modify_diff(source, TW=False, dest='', uni_val=''):
 
 	global option_auto_trailing_backslash_doubleit
 	
-	#global python_quick_tags_tdq_wrap_double_tags
-	
 	with open(source, 'r') as rp:
 		s = rp.read()
 	
@@ -214,9 +197,6 @@ def modify_diff(source, TW=False, dest='', uni_val=''):
 		
 	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&quot;&quot;&quot;') # instead of regex
 
-	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') # instead of regex, wraps with what I was going to use a <double></double> tag result though is  <double>""</double>"  Note trailing double quote though
-	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;') # instead of regex, to wrap the content with additional <tdq></tdq> tag  to better wrap, result is:  <tdq><double>""</double>"</tdq>
-	
 	with open(dest, 'w') as wp:
 		if (TW):
 			wp.write( algorithm(s,TW, uni_val) )
@@ -243,3 +223,5 @@ if __name__ == "__main__":  # in the case not transferring data from php, then s
 			sys.exit(1)
 	else:
 		modify_it( file=sys.argv[1] )
+
+# see version #67 for python_quick_tags_tdq_wrap_double_tags
