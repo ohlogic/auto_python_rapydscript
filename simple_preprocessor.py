@@ -149,19 +149,23 @@ def algorithm2(s):
 	s     = auto_backslash_escape_adjacent_to_python_quicktag(s, arr3, item1)
 	return s 
 
-def algorithm_to_allow_tdq_within_quick_tags(s): # to allow triple double quotes within quick tags <% %>
+def algorithm_to_allow_tdq_within_quick_tags(s, old='"""', new='&quot;&quot;&quot;'): # to allow triple double quotes within quick tags <% %>
 	
-	global python_quick_tags_tdq_wrap_double_tags
+	#global python_quick_tags_tdq_wrap_double_tags
 	
                                                  # can now make it a find_txt, replace_txt, opentag, closetag function
 	tup = make_quad_tuple_find_between_tags_reverse_order(s)
 
 	for i in tup:
 	
-		if (python_quick_tags_tdq_wrap_double_tags):
-			s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;') + s[i[3]:]
-		else:
-			s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') + s[i[3]:]
+		s = s[:i[0]] + s[i[0]:i[3]].replace(old, new) + s[i[3]:]
+		
+		#s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&quot;&quot;&quot;') + s[i[3]:]
+		
+		#if (python_quick_tags_tdq_wrap_double_tags):
+		#	s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;') + s[i[3]:]
+		#else:
+		#	s = s[:i[0]] + s[i[0]:i[3]].replace('"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') + s[i[3]:]
 		
 	return s
 
@@ -197,7 +201,7 @@ def modify_diff(source, TW=False, dest='', uni_val=''):
 
 	global option_auto_trailing_backslash_doubleit
 	
-	global python_quick_tags_tdq_wrap_double_tags
+	#global python_quick_tags_tdq_wrap_double_tags
 	
 	with open(source, 'r') as rp:
 		s = rp.read()
@@ -206,10 +210,10 @@ def modify_diff(source, TW=False, dest='', uni_val=''):
 		s = algorithm2(s)
 	
 	
-	#s = algorithm_to_allow_tdq_within_quick_tags(s)
+	s = algorithm_to_allow_tdq_within_quick_tags(s) # python quick tags are already the initial tags
 	
 	
-	s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&quot;&quot;&quot;') # instead of regex
+	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&quot;&quot;&quot;') # instead of regex
 
 	
 	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') # instead of regex, wraps with what I was going to use a <double></double> tag result though is  <double>""</double>"  Note trailing double quote though
