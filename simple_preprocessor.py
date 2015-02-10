@@ -4,7 +4,7 @@ import re
 option_auto_trailing_backslash_doubleit = True  # when True,  resolves by converting trailing \ to \\     (alternative method is setting to False)
                                                 # when False, resolves by adding a space to end of python quick tag string to auto resolve python not allowing trailing backslash in triple quoted string
                                                 # either is ok, works
-python_quick_tags_tdq_wrap_double_tags  = False # recommended, when False then triple double quotes (tdq) between python quick tags are converted:         """  to        <double>""<double>"
+#python_quick_tags_tdq_wrap_double_tags = False # recommended, when False then triple double quotes (tdq) between python quick tags are converted:         """  to        <double>""<double>"
                                                 # when True, a bit more structured(strict), then tdq between python quick tags are converted: """  to   <tdq><double>""<double>"</tdq>
 def print_args(s):
 	for item in s:
@@ -117,7 +117,7 @@ def algorithm(s, tw, uni_val=str(True) ):
 		# and if smushed
 		#s = s.replace('(<%', '( utags(training_wheels_bit_slower_to_remove(r"""' )
 		
-		# updated the two previous statements with the following improved statement encompassing all cases (of the indented purpose) # 2015.02.07
+		# updated the two previous statements with the following improved statement encompassing all cases (of the intended purpose) # 2015.02.07
 		s = adjacent('(', '<%', '( utags(training_wheels_bit_slower_to_remove(r"""', s)
 		
 		s = s.replace('<%', 'print utags(training_wheels_bit_slower_to_remove(r"""')
@@ -211,11 +211,9 @@ def modify_diff(source, TW=False, dest='', uni_val=''):
 	
 	
 	s = algorithm_to_allow_tdq_within_quick_tags(s) # python quick tags are already the initial tags
-	
-	
+		
 	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&quot;&quot;&quot;') # instead of regex
 
-	
 	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;') # instead of regex, wraps with what I was going to use a <double></double> tag result though is  <double>""</double>"  Note trailing double quote though
 	#s = algorithm_to_allow_tdq_within_quick_tags_final_done(s, '<%', '%>', '"""', '&lt;tdq&gt;&lt;double&gt;&quot;&quot;&lt;/double&gt;&quot;&lt;/tdq&gt;') # instead of regex, to wrap the content with additional <tdq></tdq> tag  to better wrap, result is:  <tdq><double>""</double>"</tdq>
 	
